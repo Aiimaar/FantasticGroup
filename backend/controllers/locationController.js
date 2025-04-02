@@ -11,9 +11,9 @@ export const getLocations = async (req, res) => {
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
-  };
+};
 
-  export const createLocation = async (req, res) => {
+export const createLocation = async (req, res) => {
     const { name, address, city, country, lat, lon, openH, closeH } = req.body;
   
     if (!name || !address || !city || !country || !lat || !lon || !openH || !closeH) {
@@ -49,9 +49,9 @@ export const getLocations = async (req, res) => {
       console.error("Error creating location:", error.message);
       res.status(500).json({ error: "Error creating location." });
     }
-  };
+};
 
-  export const updateLocation = async (req, res) => {
+export const updateLocation = async (req, res) => {
     try {
       const locationId = req.location.id;
       const { name, address, city, country, lat, lon, openH, closeH } = req.body;
@@ -107,16 +107,81 @@ export const getLocations = async (req, res) => {
       const updatedFields = {};
       if (name !== undefined) updatedFields.name = name;
       if (description !== undefined) updatedFields.description = description;
+      if (address !== undefined) updatedFields.address = address;
+      if (city !== undefined) updatedFields.city = city;
+      if (country !== undefined) updatedFields.country = country;
+      if (lat !== undefined) updatedFields.lat = lat;
+      if (lon !== undefined) updatedFields.lon = lon;
+      if (openH !== undefined) updatedFields.openH = openH;
+      if (closeH !== undefined) updatedFields.closeH = closeH;
   
-      const updatedUser = await existingUser.update(updatedFields);
+      const updatedLocation = await existingLocation.update(updatedFields);
   
       res.status(200).json({
-        id: updatedUser.id,
-        user_name: updatedUser.user_name,
-        email: updatedUser.email,
+        id: updatedLocation.id,
+        name: updatedLocation.name, 
+        description: updatedLocation.description, 
+        address: updatedLocation.address, 
+        city: updatedLocation.city, 
+        country: updatedLocation.country, 
+        lat: updatedLocation.lat, 
+        lon: updatedLocation.lon, 
+        openH: updatedLocation.openH, 
+        closeH: updatedLocation.closeH,
       });
     } catch (error) {
-      console.error("Error updating user:", error.message);
-      res.status(500).json({ message: "Error updating user." });
+      console.error("Error updating location:", error.message);
+      res.status(500).json({ message: "Error updating location." });
+    }
+};
+
+export const deleteLocation = async (req, res) => {
+    const { id } = req.params;
+    try {
+      const location = await Location.findByPk(id);
+      if (!location) {
+        return res.status(404).json({ message: "Location not found." });
+      }
+      await Location.destroy({ where: { id } });
+  
+      res.status(200).json({ message: `Location with id ${id} successfully deleted.` });
+    } catch (error) {
+      console.error("Error deleting location:", error.message);
+      res.status(500).json({ error: "Error deleting location." });
+    }
+};
+
+export const getLocationById = async (req, res) => {
+    const { id } = req.params;
+  
+    console.log("ID received:", id);
+  
+    try {
+      const location = await Location.findByPk(id, {
+        attributes: ['id', 'name', 'description', 'address', 'city', 'country', 'lat', 'lon', 'openH', 'closeH'],
+      });
+  
+      if (!location) {
+        console.log("Location not found");
+        return res.status(404).json({ message: "Location not found" });
+      }
+  
+      console.log("Location not found:", location);
+      
+      res.json({
+        id: location.id,
+        name: location.name, 
+        description: location.description, 
+        address: location.address, 
+        city: location.city, 
+        country: location.country, 
+        lat: location.lat, 
+        lon: location.lon, 
+        openH: location.openH, 
+        closeH: location.closeH,
+      });
+    } catch (error) {
+      console.error("Error getting location:", error);
+      res.status(500).json({ error: error.message });
     }
   };
