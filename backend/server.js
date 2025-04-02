@@ -4,6 +4,7 @@ import sequelize from './db.js';
 import * as path from 'path';
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
+import http from 'http';
 
 // Import routes
 
@@ -32,20 +33,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/', express.static(path.join(__dirname, 'public')));
 dotenv.config();
 
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET || 'your_secret',
-    resave: false,
-    saveUninitialized: false,
-    store: sessionStore,
-    cookie: {
-      maxAge: 1000 * 60 * 60 * 2,
-      httpOnly: true,
-      secure: false,
-    },
-  })
-);
-
 // API routes conf
 
 
@@ -57,9 +44,11 @@ app.use((err, req, res, next) => {
   res.status(500).send('Server error');
 });
 
+const server = http.createServer(app);
+
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
-  console.log(`🚀 Servidor corriendo en el puerto ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
 
 export default app;
