@@ -98,15 +98,15 @@ export const getLocations = async (req, res) => {
       }
   
       // Obtener el usuario existente usando el userId del token
-      const existingLocation = await User.findByPk(userId);
+      const existingLocation = await Location.findByPk(locationId);
   
-      if (!existingUser) {
-        return res.status(404).json({ message: "User not found." });
+      if (!existingLocation) {
+        return res.status(404).json({ message: "Location not found." });
       }
   
       const updatedFields = {};
-      if (user_name !== undefined) updatedFields.user_name = user_name;
-      if (email !== undefined) updatedFields.email = email;
+      if (name !== undefined) updatedFields.name = name;
+      if (description !== undefined) updatedFields.description = description;
   
       const updatedUser = await existingUser.update(updatedFields);
   
