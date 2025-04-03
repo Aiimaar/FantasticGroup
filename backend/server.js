@@ -5,12 +5,7 @@ import * as path from 'path';
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
 import http from 'http';
-import routes from './routes/index.js'; // Import routes
-import { createRequire } from 'module';
-
-// Import routes
-
-
+import routes from './routes/index.js';
 
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
@@ -30,9 +25,7 @@ app.get("/api/status", (req, res) => {
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-app.use(express.urlencoded({ extended: true }));
-app.use('/', express.static(path.join(__dirname, 'public')));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 dotenv.config();
 
 // API routes conf
