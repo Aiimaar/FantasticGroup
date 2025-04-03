@@ -5,7 +5,7 @@ const { Location } = models;
 export const getLocations = async (req, res) => {
     try {
       const locations = await Location.findAll({
-        attributes: ['id', 'name', 'description', 'address', 'city', 'country', 'lat', 'lon', 'openH', 'closeH'],
+        attributes: ['id', 'name', 'description', 'place', 'address', 'city', 'country', 'lat', 'lon', 'openH', 'closeH'],
       });
       res.json(locations);
     } catch (error) {
@@ -14,52 +14,58 @@ export const getLocations = async (req, res) => {
 };
 
 export const createLocation = async (req, res) => {
-  // Ajoutez description à la liste des variables extraites du req.body
-  const { name, description, address, city, country, lat, lon, openH, closeH } = req.body;
-
-  if (!name || !address || !city || !country || !lat || !lon || !openH || !closeH) {
-    return res.status(400).json({ error: "All fields are required." });
-  }
-
-  try {
-    const location = await Location.create({
-      name, 
-      description: description || null, 
-      address, 
-      city, 
-      country, 
-      lat, 
-      lon, 
-      openH, 
-      closeH,
-    });
-
-    res.status(201).json({
-      id: location.id,
-      name: location.name, 
-      description: location.description, 
-      address: location.address, 
-      city: location.city, 
-      country: location.country, 
-      lat: location.lat, 
-      lon: location.lon, 
-      openH: location.openH, 
-      closeH: location.closeH,
-    });
-  } catch (error) {
-    console.error("Error creating location:", error.message);
-    res.status(500).json({ error: "Error creating location." });
-  }
+    const { name, description, place, address, city, country, lat, lon, openH, closeH } = req.body;
+  
+    if (!name || !place || !address || !city || !country || !lat || !lon || !openH || !closeH) {
+      return res.status(400).json({ error: "All fields are required." });
+    }
+  
+    try {
+      const location = await Location.create({
+        name, 
+        description: description || null,
+        place,
+        address, 
+        city, 
+        country, 
+        lat, 
+        lon, 
+        openH, 
+        closeH,
+      });
+  
+      res.status(201).json({
+        id: location.id,
+        name: location.name, 
+        description: location.description,
+        place: location.place,
+        address: location.address, 
+        city: location.city, 
+        country: location.country, 
+        lat: location.lat, 
+        lon: location.lon, 
+        openH: location.openH, 
+        closeH: location.closeH,
+      });
+    } catch (error) {
+      console.error("Error creating location:", error.message);
+      res.status(500).json({ error: "Error creating location." });
+    }
 };
 
 export const updateLocation = async (req, res) => {
     try {
       const locationId = req.location.id;
-      const { name, address, city, country, lat, lon, openH, closeH } = req.body;
+      const { name, description, place, address, city, country, lat, lon, openH, closeH } = req.body;
   
       if (name !== undefined && name.trim() === "") {
         return res.status(400).json({
           message: "name can't be empty.",
+        });
+      }
+      if (place !== undefined && place.trim() === "") {
+        return res.status(400).json({
+          message: "place can't be empty.",
         });
       }
       if (address !== undefined && address.trim() === "") {
@@ -98,7 +104,6 @@ export const updateLocation = async (req, res) => {
         });
       }
   
-      // Obtener el usuario existente usando el userId del token
       const existingLocation = await Location.findByPk(locationId);
   
       if (!existingLocation) {
@@ -108,6 +113,7 @@ export const updateLocation = async (req, res) => {
       const updatedFields = {};
       if (name !== undefined) updatedFields.name = name;
       if (description !== undefined) updatedFields.description = description;
+      if (place !== undefined) updatedFields.place = place;
       if (address !== undefined) updatedFields.address = address;
       if (city !== undefined) updatedFields.city = city;
       if (country !== undefined) updatedFields.country = country;
@@ -122,6 +128,7 @@ export const updateLocation = async (req, res) => {
         id: updatedLocation.id,
         name: updatedLocation.name, 
         description: updatedLocation.description, 
+        place: updatedLocation.place,
         address: updatedLocation.address, 
         city: updatedLocation.city, 
         country: updatedLocation.country, 
@@ -159,7 +166,7 @@ export const getLocationById = async (req, res) => {
   
     try {
       const location = await Location.findByPk(id, {
-        attributes: ['id', 'name', 'description', 'address', 'city', 'country', 'lat', 'lon', 'openH', 'closeH'],
+        attributes: ['id', 'name', 'description', 'place', 'address', 'city', 'country', 'lat', 'lon', 'openH', 'closeH'],
       });
   
       if (!location) {
@@ -173,6 +180,7 @@ export const getLocationById = async (req, res) => {
         id: location.id,
         name: location.name, 
         description: location.description, 
+        place: location.place,
         address: location.address, 
         city: location.city, 
         country: location.country, 
