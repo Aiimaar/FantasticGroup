@@ -12,7 +12,7 @@ const router = express.Router();
 
 // Public
 router.get('/', getLocations);
-router.get('/:id', getLocationById);
+router.get('/:id', getLocationById);  
 
 // Protected
 router.post('/', authenticateToken, createLocation);
