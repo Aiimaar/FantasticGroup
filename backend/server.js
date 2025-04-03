@@ -5,6 +5,8 @@ import * as path from 'path';
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
 import http from 'http';
+import routes from './routes/index.js'; // Import routes
+import { createRequire } from 'module';
 
 // Import routes
 
@@ -34,7 +36,7 @@ app.use('/', express.static(path.join(__dirname, 'public')));
 dotenv.config();
 
 // API routes conf
-
+app.use('/api', routes);
 
 
 // Error management
