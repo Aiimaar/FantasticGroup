@@ -1,4 +1,4 @@
-import models from "../models";
+import models from "../models/index.js";
 
 const { Location } = models;
 
@@ -14,41 +14,42 @@ export const getLocations = async (req, res) => {
 };
 
 export const createLocation = async (req, res) => {
-    const { name, address, city, country, lat, lon, openH, closeH } = req.body;
-  
-    if (!name || !address || !city || !country || !lat || !lon || !openH || !closeH) {
-      return res.status(400).json({ error: "All fields are required." });
-    }
-  
-    try {
-      const location = await Location.create({
-        name, 
-        description: description || null, 
-        address, 
-        city, 
-        country, 
-        lat, 
-        lon, 
-        openH, 
-        closeH,
-      });
-  
-      res.status(201).json({
-        id: location.id,
-        name: location.name, 
-        description: location.description, 
-        address: location.address, 
-        city: location.city, 
-        country: location.country, 
-        lat: location.lat, 
-        lon: location.lon, 
-        openH: location.openH, 
-        closeH: location.closeH,
-      });
-    } catch (error) {
-      console.error("Error creating location:", error.message);
-      res.status(500).json({ error: "Error creating location." });
-    }
+  // Ajoutez description à la liste des variables extraites du req.body
+  const { name, description, address, city, country, lat, lon, openH, closeH } = req.body;
+
+  if (!name || !address || !city || !country || !lat || !lon || !openH || !closeH) {
+    return res.status(400).json({ error: "All fields are required." });
+  }
+
+  try {
+    const location = await Location.create({
+      name, 
+      description: description || null, 
+      address, 
+      city, 
+      country, 
+      lat, 
+      lon, 
+      openH, 
+      closeH,
+    });
+
+    res.status(201).json({
+      id: location.id,
+      name: location.name, 
+      description: location.description, 
+      address: location.address, 
+      city: location.city, 
+      country: location.country, 
+      lat: location.lat, 
+      lon: location.lon, 
+      openH: location.openH, 
+      closeH: location.closeH,
+    });
+  } catch (error) {
+    console.error("Error creating location:", error.message);
+    res.status(500).json({ error: "Error creating location." });
+  }
 };
 
 export const updateLocation = async (req, res) => {
