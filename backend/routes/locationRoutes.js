@@ -1,12 +1,5 @@
 import express from 'express';
-import {
-  getLocations,
-  createLocation,
-  updateLocation,
-  deleteLocation,
-  getLocationById
-} from '../controllers/locationController.js';
- import { authenticateToken } from '../middleware/authenticateToken.js'; 
+import { authenticateToken } from '../middleware/authenticateToken.js'; 
 import upload, { getLocations, createLocation, updateLocation, deleteLocation, getLocationById } from '../controllers/locationController.js';
 
 
