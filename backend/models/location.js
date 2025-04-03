@@ -42,6 +42,10 @@ const Location = sequelize.define('Location', {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  image : {
+    type: sequelize.STRING,
+    allowNull: true,
+  },
 }, {
   timestamps: false,
 });
