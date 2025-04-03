@@ -8,7 +8,10 @@ const Location = sequelize.define('Location', {
   },
   description: {
     type: DataTypes.STRING,
-    unique: true  ,
+    allowNull: true,
+  },
+  place: {
+    type: DataTypes.STRING,
     allowNull: true,
   },
   address : {
