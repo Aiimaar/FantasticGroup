@@ -6,7 +6,7 @@ import {
   deleteUser,
   getUserById
 } from '../controllers/userController.js';
- import auth from '../middlewares/auth.js';
+ import { authenticateToken } from '../middleware/authenticateToken.js';
 
 const router = express.Router();
 
@@ -14,9 +14,9 @@ const router = express.Router();
 router.post('/register', createUser); 
 
 // Protected (require auth)
-router.get('/', auth, getUsers);
-router.get('/:id', auth, getUserById);
-router.put('/:id', auth, updateUser);
-router.delete('/:id', auth, deleteUser);
+router.get('/', authenticateToken, getUsers);
+router.get('/:id', authenticateToken, getUserById);
+router.put('/:id',authenticateToken, updateUser);
+router.delete('/:id', authenticateToken, deleteUser);
 
 export default router;

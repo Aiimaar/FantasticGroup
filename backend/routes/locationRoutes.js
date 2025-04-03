@@ -1,6 +1,14 @@
 import express from 'express';
+import {
+  getLocations,
+  createLocation,
+  updateLocation,
+  deleteLocation,
+  getLocationById
+} from '../controllers/locationController.js';
+ import { authenticateToken } from '../middleware/authenticateToken.js'; 
 import upload, { getLocations, createLocation, updateLocation, deleteLocation, getLocationById } from '../controllers/locationController.js';
- import auth from '../middlewares/auth.js'; 
+
 
 const router = express.Router();
 
@@ -9,8 +17,8 @@ router.get('/', getLocations);
 router.get('/:id', getLocationById);  
 
 // Protected
-router.post('/', auth, upload.single('image'), createLocation);
-router.put('/:id', auth, upload.single('image'), updateLocation);
-router.delete('/:id', auth, deleteLocation);
+router.post('/', authenticateToken, upload.single('image'), createLocation);
+router.put('/:id', authenticateToken, upload.single('image'), updateLocation);
+router.delete('/:id', authenticateToken, deleteLocation);
 
 export default router;
