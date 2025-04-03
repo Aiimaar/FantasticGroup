@@ -103,7 +103,6 @@ export const getFeatureById = async (req, res) => {
       res.json({
         id: feature.id,
         name: feature.name,
-        email: feature.email,
       });
     } catch (error) {
       console.error("Error getting feature:", error);
