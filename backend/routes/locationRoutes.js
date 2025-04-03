@@ -6,7 +6,7 @@ import {
   deleteLocation,
   getLocationById
 } from '../controllers/locationController.js';
- import auth from '../middlewares/auth.js'; 
+ import { authenticateToken } from '../middleware/authenticateToken.js'; 
 
 const router = express.Router();
 
@@ -15,8 +15,8 @@ router.get('/', getLocations);
 router.get('/:id', getLocationById);
 
 // Protected
-router.post('/', auth, createLocation);
-router.put('/:id', auth, updateLocation);
-router.delete('/:id', auth, deleteLocation);
+router.post('/', authenticateToken, createLocation);
+router.put('/:id', authenticateToken, updateLocation);
+router.delete('/:id', authenticateToken, deleteLocation);
 
 export default router;

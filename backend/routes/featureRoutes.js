@@ -6,14 +6,14 @@ import {
   deleteFeature,
   getFeatureById
 } from '../controllers/featureController.js';
-import auth from '../middlewares/auth.js'; 
+import { authenticateToken } from '../middleware/authenticateToken.js'; 
 
 const router = express.Router();
 
 router.get('/', getFeatures);
 router.get('/:id', getFeatureById);
-router.post('/', auth, createFeature);
-router.put('/:id', auth, updateFeature);
-router.delete('/:id', auth, deleteFeature);
+router.post('/', authenticateToken, createFeature);
+router.put('/:id', authenticateToken, updateFeature);
+router.delete('/:id', authenticateToken, deleteFeature);
 
 export default router;

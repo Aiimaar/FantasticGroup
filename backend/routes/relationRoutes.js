@@ -10,15 +10,15 @@ import {
   createFeatureLocation,
   getFeatureLocationByLocationId
 } from '../controllers/featureLocationController.js';
- import auth from '../middlewares/auth.js'; 
+ import { authenticateToken } from '../middleware/authenticateToken.js'; 
 
 const router = express.Router();
 
 // User-Location
-router.get('/user-locations', auth, getUserLocations);
-router.post('/user-locations', auth, createUserLocation);
-router.get('/users/:userId/locations', auth, getUserLocationByUserId);
-router.delete('/user-locations/:id', auth, deleteUserLocation);
+router.get('/user-locations', authenticateToken, getUserLocations);
+router.post('/user-locations', authenticateToken, createUserLocation);
+router.get('/users/:userId/locations', authenticateToken, getUserLocationByUserId);
+router.delete('/user-locations/:id', authenticateToken, deleteUserLocation);
 
 // Feature-Location
 router.get('/feature-locations', getFeatureLocations);
