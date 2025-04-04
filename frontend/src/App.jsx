@@ -1,7 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import { useState, useEffect } from "react";
-
-// import pages and components down here
+import ContactForm from "./pages/contactform/ContactForm";
 
 
 
@@ -9,7 +8,7 @@ function App() {
   return (
     <>
       <Routes>
-        // Routes go here
+        <Route path="/contact-form" element={<ContactForm />} />
       </Routes>
     </>
   );
