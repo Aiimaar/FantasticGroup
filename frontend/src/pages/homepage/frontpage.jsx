@@ -1,11 +1,13 @@
 import { FrontPageStyled } from "./frontpage.styled";
-import Navigation from "../../components/NavigationBar/navigation"
+import BckImage from "../../assets/images/bck.svg"
 
 const FrontPage = () => {
     return (
         <FrontPageStyled>
-            <Navigation />
+                <img className="BckImage" src={BckImage} alt="" />
             
         </FrontPageStyled>
     )
 };
+
+export default FrontPage;
