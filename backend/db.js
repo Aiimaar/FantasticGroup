@@ -3,7 +3,7 @@ import { Sequelize } from 'sequelize';
 const sequelize = new Sequelize({
   database: 'fantasticgroup',  
   username: 'root',           
-  password: 'Aepppa20yseeuf',               
+  password: '1234',               
   host: 'localhost',          
   dialect: 'mysql',           
   port: 3306,                 
