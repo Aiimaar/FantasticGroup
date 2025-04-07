@@ -26,7 +26,7 @@
   
   .contact-form-comp-subtitle {
     font-size: 0.875rem;
-    color: #7a7a7a;
+    color: #000000;
     margin-bottom: 12px;
   }
   
@@ -73,5 +73,31 @@
     font-size: 0.9rem;
     text-align: center;
     margin-top: 8px;
+  }
+  
+  @media screen and (min-width: 768px) {
+    .contact-form-comp-title,
+    .contact-form-comp-subtitle,
+    .contact-form-comp-form {
+      max-width: 420px;
+    }
+  
+    .contact-form-comp-title {
+      font-size: 3rem;
+      text-align: left;
+    }
+  
+    .contact-form-comp-subtitle {
+      font-size: 1.2rem;
+      text-align: left;
+    }
+  
+    .contact-form-comp-form {
+      gap: 30px;
+    }
+  
+    .contact-form-comp-button {
+      width: 30%;
+    }
   }
   
