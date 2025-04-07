@@ -10,10 +10,6 @@ import {
 
 const router = express.Router();
 
-// Public
-router.post('/register', createUser); 
-
-// Protected (require auth)
 router.get('/', authenticateToken, getUsers);
 router.get('/:id', authenticateToken, getUserById);
 router.put('/:id',authenticateToken, updateUser);
