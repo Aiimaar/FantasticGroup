@@ -6,6 +6,7 @@ import FrontPage from "./pages/homepage/frontpage";
 
 // Components
 import Navigation from "./components/NavigationBar/navigation";
+import Footer from "./components/Footer/footer";
 
 
 
@@ -17,6 +18,7 @@ function App() {
         <Route path="/contact-form" element={<ContactForm />} />
         <Route path="/" element={<FrontPage />} />
       </Routes>
+      <Footer />
     </>
   );
 };
