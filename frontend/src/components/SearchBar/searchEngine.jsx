@@ -1,6 +1,9 @@
+import { useState } from "react";
 import { SearchBarStyled } from "./search.styled";
 
 const SearchBar = () => {
+  const [searchText, setSearchText] = useState("");
+
     return (
         <SearchBarStyled>
              <input
