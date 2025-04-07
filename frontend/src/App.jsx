@@ -1,15 +1,21 @@
 import { Routes, Route } from "react-router-dom";
 import { useState, useEffect } from "react";
+// Pages
+import FrontPage from "./pages/homepage/frontpage";
 
-// import pages and components down here
+// Components
+import Navigation from "./components/NavigationBar/navigation";
+
+
 
 
 
 function App() {
   return (
     <>
+      <Navigation />
       <Routes>
-        // Routes go here
+        <Route path="/" element={<FrontPage />} />
       </Routes>
     </>
   );
