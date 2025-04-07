@@ -11,6 +11,8 @@ const ContactFormComp = () => {
     message: "",
   });
 
+  const [successMessage, setSuccessMessage] = useState("");
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -18,8 +20,18 @@ const ContactFormComp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("/api/contact", formData);
-      console.log("Message sent:", response.data);
+      console.log("Message sent:", formData);
+      setFormData({
+        subject: "",
+        country: "",
+        name: "",
+        email: "",
+        message: "",
+      });
+
+      setSuccessMessage("Thanks! Your message has been sent.");
+
+      setTimeout(() => setSuccessMessage(""), 3000);
     } catch (error) {
       console.error("Error sending message:", error);
     }
@@ -47,8 +59,9 @@ const ContactFormComp = () => {
           className="contact-form-comp-select"
         >
           <option value="">Country</option>
-          <option value="USA">USA</option>
-          <option value="Mexico">Mexico</option>
+          <option value="Iceland">Iceland</option>
+          <option value="Denmark">Denmark</option>
+          <option value="Spain">Spain</option>
         </select>
         <input
           type="text"
@@ -76,9 +89,13 @@ const ContactFormComp = () => {
         <button
           type="submit"
           className="contact-form-comp-button"
+          onClick={handleSubmit}
         >
           Send
         </button>
+        {successMessage && (
+          <p className="contact-form-comp-success">{successMessage}</p>
+        )}
       </form>
     </div>
   );
