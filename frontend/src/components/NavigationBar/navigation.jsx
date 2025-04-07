@@ -62,7 +62,7 @@ return (
                     <NavLink to="/location">Location</NavLink>
                 </li>
                 <li>
-                    <NavLink to="/contact">Contact</NavLink>
+                    <NavLink to="/contact-form">Contact</NavLink>
                 </li>
                 <li>
                     <NavLink to="/login" aria-label="Login"><FontAwesomeIcon icon={faUser} /></NavLink>
