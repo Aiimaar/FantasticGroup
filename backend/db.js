@@ -4,9 +4,7 @@ const sequelize = new Sequelize({
   database: 'fantasticgroup',  
   username: 'root',           
 
-  password: '',               
-
-  password: '1234',               
+  password: 'NouveauMotDePasse', // Change this to your actual password        
 
   host: 'localhost',          
   dialect: 'mysql',           
@@ -28,7 +26,7 @@ sequelize.authenticate()
   .then(() => console.log('Connected with MySQL!'))
   .catch(err => {
     console.error('Failed to connect to MySQL:', err.message);
-    process.exit(1);e
+    process.exit(1);
   });
 
 export default sequelize;

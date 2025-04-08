@@ -1,6 +1,32 @@
+
+import models from '../models/index.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import models from '../models/index.js';
+
+const ADMIN_CREDENTIALS = {
+  username: 'admin',
+  password: 'admin', // À changer avant la mise en production
+  role: 'admin'
+};
+
+export const adminLogin = async (req, res) => {
+  const { username, password } = req.body;
+
+  if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
+    const token = jwt.sign(
+      { id: 'admin-001', role: ADMIN_CREDENTIALS.role },
+      process.env.JWT_SECRET,
+      { expiresIn: '24h' }
+    );
+    
+    return res.json({
+      user: ADMIN_CREDENTIALS,
+      token
+    });
+  }
+
+  res.status(401).json({ message: 'Invalid admin credentials' });
+};
 
 const { User } = models;
 
