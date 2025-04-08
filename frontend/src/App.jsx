@@ -9,6 +9,7 @@ import Navigation from "./components/NavigationBar/navigation";
 import Footer from "./components/Footer/footer";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
+import UserProfile from "./pages/userprofile/UserProfile";
 
 
 
@@ -21,6 +22,7 @@ function App() {
         <Route path="/" element={<FrontPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/user-profile" element={<UserProfile />} />
       </Routes>
       <Footer />
     </>
