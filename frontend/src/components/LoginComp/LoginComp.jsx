@@ -34,8 +34,10 @@ const LoginComp = () => {
       if (token) {
         localStorage.setItem("authToken", token);
 
-        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+        // Emitir evento personalizado para notificar que el login ocurrió
+        window.dispatchEvent(new Event("authChanged"));
 
+        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
         navigate("/");
       } else {
         throw new Error("No token received from server.");
@@ -50,11 +52,7 @@ const LoginComp = () => {
   return (
     <div className="login-comp-container">
       <div className="login-comp-map">
-        <img
-          src="/map.png"
-          alt="Map illustration"
-          className="login-comp-map-img"
-        />
+        <img src="/map.png" alt="Map illustration" className="login-comp-map-img" />
       </div>
 
       <form onSubmit={handleLogin} className="login-comp-form">
@@ -78,17 +76,13 @@ const LoginComp = () => {
 
         {error && <div className="login-comp-error">{error}</div>}
 
-        <button
-          type="submit"
-          disabled={loading}
-          className="login-comp-button"
-        >
+        <button type="submit" disabled={loading} className="login-comp-button">
           {loading ? "Logging in..." : "Login"}
         </button>
 
         <div className="login-comp-divider">or</div>
 
-        <button type="button" className="login-comp-join">
+        <button type="button" className="login-comp-join" onClick={() => navigate("/register")}>
           Join us and create new account
         </button>
       </form>

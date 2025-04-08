@@ -2,12 +2,8 @@ import { Sequelize } from 'sequelize';
 
 const sequelize = new Sequelize({
   database: 'fantasticgroup',  
-  username: 'root',           
-
-  password: '',               
-
-  password: '1234',               
-
+  username: 'root',
+  password: 'Aepppa20yseeuf',
   host: 'localhost',          
   dialect: 'mysql',           
   port: 3306,                 
