@@ -9,43 +9,42 @@ const useNews = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchNews = async () => {
-      try {
-        const client = createClient({
-          space: import.meta.env.VITE_CONTENTFUL_SPACE_ID,
-          accessToken: import.meta.env.VITE_CONTENTFUL_ACCESS_TOKEN
-        });
+    const client = createClient({
+      space: "q9cy9f1xl4w0",
+      accessToken: "Vazz_9-yxEzrQhYMW6AnPHEGwlDXMv_IofqfX8q-PSw"
+    });
 
-        const response = await client.getEntries({
-          content_type: 'article',
-          order: '-sys.createdAt' // Tri par date de création décroissante
-        });
-
-        setNews(response.items.map(item => ({
-          id: item.sys.id,
-          title: item.fields.title,
-          excerpt: item.fields.description?.content[0]?.content[0]?.value || '', // Extrait du premier paragraphe
-          image: item.fields.image?.fields?.file?.url,
-          slug: item.fields.slug || generateSlug(item.fields.title),
-          date: new Date(item.sys.createdAt).toLocaleDateString()
-        })));
-      } catch (err) {
-        setError(err);
-        console.error('Contentful fetch error:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchNews();
+    client.getEntries({
+      content_type: 'articles', // Notez le 's' à la fin (d'après votre JSON)
+      include: 2 // Pour inclure les assets liés
+    })
+    .then(response => {
+      setNews(response.items.map(item => ({
+        id: item.sys.id,
+        title: item.fields.titre, // Champ 'titre' dans votre JSON
+        description: extractTextFromRichText(item.fields.description),
+        image: getFirstImageUrl(item.fields.image, response.includes),
+        slug: generateSlug(item.fields.titre),
+        date: new Date(item.sys.createdAt).toLocaleDateString()
+      })));
+    })
+    .catch(err => setError(err))
+    .finally(() => setLoading(false));
   }, []);
 
+  // Helper functions
+  const extractTextFromRichText = (richText) => {
+    return richText?.content?.[0]?.content?.[0]?.value || '';
+  };
+
+  const getFirstImageUrl = (images, includes) => {
+    if (!images?.[0]?.sys?.id) return null;
+    const asset = includes?.Asset?.find(a => a.sys.id === images[0].sys.id);
+    return asset?.fields?.file?.url ? `https:${asset.fields.file.url}` : null;
+  };
+
   const generateSlug = (title) => {
-    return title
-      .toLowerCase()
-      .replace(/[^\w\s]/g, '')
-      .replace(/\s+/g, '-')
-      .slice(0, 50);
+    return title.toLowerCase().replace(/[^\w\s]/g, '').replace(/\s+/g, '-');
   };
 
   return { news, error, loading };
@@ -54,37 +53,27 @@ const useNews = () => {
 const WhatsNew = () => {
   const { news, error, loading } = useNews();
 
-  if (loading) return <LoadingSpinner />;
-  if (error) return <ErrorDisplay message={error.message} />;
-  if (!news.length) return <EmptyState />;
+  if (loading) return <div className="loading">Chargement...</div>;
+  if (error) return <div className="error">Erreur : {error.message}</div>;
+  if (!news.length) return <div className="empty">Aucune actualité</div>;
 
   return (
     <NewsStyled>
-      <h2>Latest Updates</h2>
+      <h2>Actualités</h2>
       <div className="news-container">
-        {news.map((item) => (
-          <article key={item.id} className="news-card">
+        {news.map(item => (
+          <div key={item.id} className="news-item">
             {item.image && (
-              <div className="image-container">
-                <img 
-                  src={`https:${item.image}`} 
-                  alt={item.title}
-                  loading="lazy"
-                />
-              </div>
+              <img 
+                src={item.image} 
+                alt={item.title}
+                loading="lazy"
+              />
             )}
-            <div className="content">
-              <h3>{item.title}</h3>
-              <p className="date">{item.date}</p>
-              <p className="excerpt">{item.excerpt}</p>
-              <Link 
-                to={`/news/${item.slug}`} 
-                className="read-more"
-              >
-                Discover
-              </Link>
-            </div>
-          </article>
+            <h3>{item.title}</h3>
+            <p>{item.description}</p>
+            <span className="date">{item.date}</span>
+          </div>
         ))}
       </div>
     </NewsStyled>
