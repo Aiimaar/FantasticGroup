@@ -14,9 +14,9 @@ const LoginComp = () => {
     e.preventDefault();
     setLoading(true);
     setError("");
-
+  
     const credentials = btoa(`${email}:${password}`);
-
+  
     try {
       const response = await axios.post(
         "http://localhost:3000/api/auth/login",
@@ -28,26 +28,26 @@ const LoginComp = () => {
           },
         }
       );
-
-      const token = response.data.token;
-
-      if (token) {
+  
+      const { token, userId } = response.data;
+  
+      if (token && userId) {
         localStorage.setItem("authToken", token);
-
-        // Emitir evento personalizado para notificar que el login ocurrió
+        localStorage.setItem("userId", userId);
+  
         window.dispatchEvent(new Event("authChanged"));
-
+  
         axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
         navigate("/");
       } else {
-        throw new Error("No token received from server.");
+        throw new Error("Missing token or userId in response.");
       }
     } catch (err) {
       setError(err.response?.data?.message || "Login failed. Please try again.");
     } finally {
       setLoading(false);
     }
-  };
+  };  
 
   return (
     <div className="login-comp-container">
