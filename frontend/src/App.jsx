@@ -6,6 +6,8 @@ import FrontPage from "./pages/homepage/frontpage";
 
 // Components
 import Navigation from "./components/NavigationBar/navigation";
+import Footer from "./components/Footer/footer";
+import Login from "./pages/login/Login";
 
 
 
@@ -16,7 +18,9 @@ function App() {
       <Routes>
         <Route path="/contact-form" element={<ContactForm />} />
         <Route path="/" element={<FrontPage />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
+      <Footer />
     </>
   );
 };

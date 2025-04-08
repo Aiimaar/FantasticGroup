@@ -1,5 +1,5 @@
 import { FrontPageStyled } from "./frontpage.styled";
-import BckImage from "../../assets/images/bck.svg"
+import BckImage from "../../assets/images/mainimg.png"
 
 const FrontPage = () => {
     return (
