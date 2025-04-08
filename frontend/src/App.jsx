@@ -8,6 +8,7 @@ import FrontPage from "./pages/homepage/frontpage";
 import Navigation from "./components/NavigationBar/navigation";
 import Footer from "./components/Footer/footer";
 import Login from "./pages/login/Login";
+import Register from "./pages/register/Register";
 
 
 
@@ -19,6 +20,7 @@ function App() {
         <Route path="/contact-form" element={<ContactForm />} />
         <Route path="/" element={<FrontPage />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
       </Routes>
       <Footer />
     </>
