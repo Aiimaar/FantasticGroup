@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useAuth } from '../../contexts/AuthContext';
+import '../../styles/admin.css';
 
 const AdminLogin = () => {
   const [credentials, setCredentials] = useState({ username: '', password: '' });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { adminLogin } = useAuth();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -21,9 +24,8 @@ const AdminLogin = () => {
     try {
       const response = await axios.post('http://localhost:3000/api/auth/admin/login', credentials);
       
-      // Stockez le token dans localStorage
-      localStorage.setItem('adminToken', response.data.token);
-      localStorage.setItem('adminUser', JSON.stringify(response.data.user));
+      // Utiliser la fonction de login du contexte
+      adminLogin(response.data.token, response.data.user);
       
       // Rediriger vers le tableau de bord admin
       navigate('/admin');
