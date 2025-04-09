@@ -14,9 +14,9 @@ const LoginComp = () => {
     e.preventDefault();
     setLoading(true);
     setError("");
-
+  
     const credentials = btoa(`${email}:${password}`);
-
+  
     try {
       const response = await axios.post(
         "http://localhost:3000/api/auth/login",
@@ -28,33 +28,31 @@ const LoginComp = () => {
           },
         }
       );
-
-      const token = response.data.token;
-
-      if (token) {
+  
+      const { token, userId } = response.data;
+  
+      if (token && userId) {
         localStorage.setItem("authToken", token);
-
+        localStorage.setItem("userId", userId);
+  
+        window.dispatchEvent(new Event("authChanged"));
+  
         axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-
         navigate("/");
       } else {
-        throw new Error("No token received from server.");
+        throw new Error("Missing token or userId in response.");
       }
     } catch (err) {
       setError(err.response?.data?.message || "Login failed. Please try again.");
     } finally {
       setLoading(false);
     }
-  };
+  };  
 
   return (
     <div className="login-comp-container">
       <div className="login-comp-map">
-        <img
-          src="/map.png"
-          alt="Map illustration"
-          className="login-comp-map-img"
-        />
+        <img src="/map.png" alt="Map illustration" className="login-comp-map-img" />
       </div>
 
       <form onSubmit={handleLogin} className="login-comp-form">
@@ -78,17 +76,13 @@ const LoginComp = () => {
 
         {error && <div className="login-comp-error">{error}</div>}
 
-        <button
-          type="submit"
-          disabled={loading}
-          className="login-comp-button"
-        >
+        <button type="submit" disabled={loading} className="login-comp-button">
           {loading ? "Logging in..." : "Login"}
         </button>
 
         <div className="login-comp-divider">or</div>
 
-        <button type="button" className="login-comp-join">
+        <button type="button" className="login-comp-join" onClick={() => navigate("/register")}>
           Join us and create new account
         </button>
       </form>

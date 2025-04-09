@@ -9,18 +9,18 @@ import FrontPage from "./pages/homepage/frontpage";
 import Navigation from "./components/NavigationBar/navigation";
 import Footer from "./components/Footer/footer";
 import Login from "./pages/login/Login";
+import Register from "./pages/register/Register";
+import UserProfile from "./pages/userprofile/UserProfile";
 
 // Pages admin
-import AdminLogin from  "./pages/Admin/AdminLogin"
+import AdminLogin from "./pages/Admin/AdminLogin"
 import AdminLayout from "./components/admin/AdminLayout";
 import Dashboard from "./pages/Admin/Dashboard";
 import Cafes from "./pages/Admin/Cafes";
 import ProtectedAdminRoute from "./components/admin/ProtectedAdminRoutes";
-import ".//styles/admin.css";
+
+// Styles
 import "./styles/admin.css";
-
-
-
 
 function App() {
   // Vérifier si on est sur une route d'administration
@@ -34,6 +34,8 @@ function App() {
         <Route path="/contact-form" element={<ContactForm />} />
         <Route path="/" element={<FrontPage />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/user-profile" element={<UserProfile />} />
         
         {/* Routes admin */}
         <Route path="/admin/login" element={<AdminLogin />} />

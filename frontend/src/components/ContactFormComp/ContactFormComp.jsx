@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import "./ContactFormComp.css";
 
@@ -12,6 +12,33 @@ const ContactFormComp = () => {
   });
 
   const [successMessage, setSuccessMessage] = useState("");
+
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      const userId = localStorage.getItem("userId");
+      const token = localStorage.getItem("authToken");
+
+      if (!userId || !token) return;
+
+      try {
+        const response = await axios.get(`http://localhost:3000/api/users/${userId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        setFormData((prev) => ({
+          ...prev,
+          name: response.data.user_name || "",
+          email: response.data.email || "",
+        }));
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchUserInfo();
+  }, []);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -30,7 +57,6 @@ const ContactFormComp = () => {
       });
 
       setSuccessMessage("Thanks! Your message has been sent.");
-
       setTimeout(() => setSuccessMessage(""), 3000);
     } catch (error) {
       console.error("Error sending message:", error);
