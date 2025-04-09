@@ -1,9 +1,9 @@
 import { NewsStyled } from "./news.styled.js";
-import { useNewsContext } from "../../hooks/newsContext.jsx"; 
+import { useNewsHook } from "../../hooks/useNewsHook.jsx"; 
 import { Link } from 'react-router-dom';
 
 export const WhatsNew = () => {
-    const { news, error } = useNewsContext();
+    const { news, error } = useNewsHook();
 
     if (error) return <div>Error: {error.message}</div>;
     if (news.length === 0) return <div>No news available</div>;

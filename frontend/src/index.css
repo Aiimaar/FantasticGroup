@@ -1,4 +1,7 @@
-
+* {
+    box-sizing: border-box;
+  }
+  
 html, 
 body {
     width: 100%;
@@ -7,4 +10,5 @@ body {
 
 body{
     margin: 0;
+    overflow-y: hidden;
 }
