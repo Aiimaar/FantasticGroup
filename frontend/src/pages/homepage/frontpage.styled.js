@@ -1,6 +1,15 @@
 import styled from 'styled-components';
 
+
 export const FrontPageStyled = styled.div`
+
+.bigWave {
+  position: absolute;
+  object-fit: contain;
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+}
 
 .BckImage {
     position: relative;
@@ -11,7 +20,9 @@ export const FrontPageStyled = styled.div`
     z-index: -1;
   }
 
-  .contentContainer {
+  section {
+    display: flex;
+    flex-direction: column;
     padding: 3rem;
   }
 

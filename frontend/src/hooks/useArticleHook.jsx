@@ -1,14 +1,14 @@
 import client from '../utils/contentfulClient.js';
 import { useState, useEffect } from 'react';
 
-export const useNewsContext = () => {
-    const [news, setNews] = useState([]);
+export const useArticlesHook = () => {
+    const [articles, setArticles] = useState([]);
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        client.getEntries({ content_type: 'newsArticles' })
+        client.getEntries({ content_type: 'goGreenArticles' })
             .then((data) => {
-                const fetchedNews = data.items.map((item) => ({
+                const fetchedArticles = data.items.map((item) => ({
                     id: item.sys.id,
                     title: item.fields.title,
                     description: item.fields.description, 
@@ -16,7 +16,7 @@ export const useNewsContext = () => {
                     slug: item.fields.slug,
                 }));
 
-                setNews(fetchedNews);
+                setArticles(fetchedArticles);
             })
             .catch((error) => {
                 setError(error);
@@ -24,6 +24,6 @@ export const useNewsContext = () => {
             });
     }, []);
 
-    return { news, error }; 
+    return { articles, error }; 
 };
 

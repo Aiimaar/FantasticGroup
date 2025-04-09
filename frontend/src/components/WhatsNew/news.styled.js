@@ -5,34 +5,32 @@ export const NewsStyled = styled.section`
 
   .news-container {
     display: flex;
-    /* justify-content: center; */
     overflow-x: auto;
     gap: 20px;
   }
 
   .news-container::-webkit-scrollbar {
-  display: none; /* Chrome/Safari */
+  display: none; 
 }
 
   .news-item {
     width: 250px;
     height: 330px;
+    max-height: 330px;
     max-width: 100px;
     min-width: 230px;
     position: relative;
     border-radius: 20px;
     overflow: hidden;
-    scroll-behavior: smooth;
-    background-color: green;
-    text-align: center;
-    max-height: 330px;
     display: flex;
+    scroll-behavior: smooth;
+    text-align: center;
     flex-direction: column;
     
 
     img {
       width: 100%;
-      height: auto;
+      height: 100%;
       z-index: 1;
       position: relative;
       vertical-align: middle;
@@ -62,8 +60,7 @@ export const NewsStyled = styled.section`
       flex-grow: 1;
       padding: 20px;
       
-
-
+      
       h3 {
         margin: 0;
       }
@@ -76,6 +73,9 @@ export const NewsStyled = styled.section`
       background-color: #A37C67;
       color: white;
       font-weight: 100;
+    }
+    button:hover {
+      cursor: pointer;
     }
 
     /* 🎨 Farvevariationer */
@@ -108,9 +108,6 @@ export const NewsStyled = styled.section`
       grid-template-columns: repeat(3, 1fr);
       justify-content: center;
       
-      /* gap: 40px; */
-      /* padding: 20px 40px; */
-      /* overflow: visible; */
     }
   }
 `;
