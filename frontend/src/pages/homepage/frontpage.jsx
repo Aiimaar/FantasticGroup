@@ -11,7 +11,10 @@ const FrontPage = () => {
     return (
         <FrontPageStyled>
                 <img className="BckImage" src={BckImage} alt="" />
-
+                <div className="headerText">
+                    <h1>Where should we look?</h1>
+                    <h2>Remote working Space <span>finder</span></h2>
+                </div>
 
                 <section>
                     <WhatsNew />

@@ -13,7 +13,7 @@ export const WhatsNew = () => {
 
     return (
         <NewsStyled>
-            <h2>What's New</h2>
+            <h2>What's New!</h2>
             <div className="news-container">
                 {news.map((item, index) => {
                     const waveClass = waveColors[index % waveColors.length]; // Fast farve pr. item
