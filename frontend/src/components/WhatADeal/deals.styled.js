@@ -1,9 +1,29 @@
 import styled from "styled-components";
 import wave from "../../assets/images/wave.png";
 
+import bckLeafs from "../../assets/images/bck.png";
+
+export const DealsStyled = styled.div`
+
+    .bckLeafs {
+      position: absolute;
+      background-image: url(${bckLeafs});
+      width: 100%;
+      object-fit: fill;
+      height: 500px;
+      z-index: -1;
+    }
+
+
+
+  .deals-container {
+
+
+
 export const DealsStyled = styled.div`
 
   .deals-container {
+
     display: flex;
     overflow-x: auto;
     gap: 20px;
@@ -15,9 +35,16 @@ export const DealsStyled = styled.div`
 
   .deal-item {
     width: 250px;
+
+    height: 320px;
+    max-height: 320px;
+    max-width: 100px;
+    min-height: 320px;
+
     height: 350px;
     max-height: 350px;
     max-width: 250px;
+
     min-width: 230px;
     position: relative;
     border-radius: 20px;

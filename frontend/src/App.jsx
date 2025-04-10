@@ -11,6 +11,10 @@ import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
 import UserProfile from "./pages/userprofile/UserProfile";
 
+import LocationPage from "./pages/location/Location";
+
+
+
 
 
 function App() {
@@ -20,6 +24,7 @@ function App() {
       <Routes>
         <Route path="/contact-form" element={<ContactForm />} />
         <Route path="/" element={<FrontPage />} />
+        <Route path="/location" element={<LocationPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/user-profile" element={<UserProfile />} />
