@@ -14,12 +14,20 @@ overflow: hidden;
     height: 475px;
     
 }`
-export const PictureHolder = styled.img`
+export const PictureHolder = styled.div`
 width: 320px;
 height: 240px;
 border-radius: 28px;
 overflow: hidden;
 border: 1px solid #A37C67;
+
+img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
 
 @media screen and (max-width: 768px) {
   width: 360px;

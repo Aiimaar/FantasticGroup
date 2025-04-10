@@ -1,21 +1,20 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser, faBars, faXmark, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import {
+  faUser,
+  faBars,
+  faXmark,
+  faMagnifyingGlass,
+} from "@fortawesome/free-solid-svg-icons";
 import { NavigationWrapper } from "./navigation.styled";
-import Logo from "../../assets/images/loopLogo.svg";
+import Logo from "../../assets/images/Logo.svg";
+import SearchBar from "../SearchBar/searchEngine"; 
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const searchInputRef = useRef(null);
-
-  useEffect(() => {
-    if (isSearchOpen && searchInputRef.current) {
-      searchInputRef.current.focus();
-    }
-  }, [isSearchOpen]);
 
   useEffect(() => {
     const checkAuth = () => {
@@ -46,12 +45,8 @@ const Navigation = () => {
           >
             <FontAwesomeIcon icon={faMagnifyingGlass} />
           </button>
-          <input
-            ref={searchInputRef}
-            type="text"
-            placeholder="Address, city or country..."
-            aria-label="Search input"
-          />
+
+          {isSearchOpen && <SearchBar autoFocus />}
         </div>
 
         <button
