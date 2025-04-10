@@ -24,10 +24,17 @@ import {
 import Pin from "../../assets/images/pinicon.svg";
 import Walking from "../../assets/images/walkingicon.svg";
 const PlaceCard = ({ name, address, timeFromUser, image, open }) => {
+  const backendUrl = "http://localhost:3000"; // Eller din prod URL
+
   return (
     <CardWrapper>
       <InfoHolder>
-        <PictureHolder src={image} />
+      <PictureHolder>
+        <img src={`${backendUrl}/uploads/${image}`} alt={name} />
+
+      </PictureHolder>
+
+
 
         <MainInfoHolder>
           <div
