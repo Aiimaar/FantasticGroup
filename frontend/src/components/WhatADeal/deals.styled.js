@@ -1,24 +1,6 @@
 import styled from "styled-components";
 import wave from "../../assets/images/wave.png";
 
-import bckLeafs from "../../assets/images/bck.png";
-
-export const DealsStyled = styled.div`
-
-    .bckLeafs {
-      position: absolute;
-      background-image: url(${bckLeafs});
-      width: 100%;
-      object-fit: fill;
-      height: 500px;
-      z-index: -1;
-    }
-
-
-
-  .deals-container {
-
-
 
 export const DealsStyled = styled.div`
 
