@@ -1,4 +1,4 @@
-import { DealsStyled } from "./Deals.styled.js";
+import { DealsStyled } from "./deals.styled.js";
 import { useDealsHook } from "../../hooks/useDealsHook.jsx"; 
 import { Link } from 'react-router-dom';
 

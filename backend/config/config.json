@@ -1,0 +1,24 @@
+{
+    "development": {
+      "username": "root",
+      "password": "Aepppa20yseeuf",
+      "database": "fantasticgroup",
+      "host": "db",
+      "dialect": "mysql"
+    },
+    "test": {
+      "username": "root",
+      "password": "Aepppa20yseeuf",
+      "database": "fantasticgroup",
+      "host": "db",
+      "dialect": "mysql"
+    },
+    "production": {
+      "username": "root",
+      "password": "Aepppa20yseeuf",
+      "database": "fantasticgroup",
+      "host": "db",
+      "dialect": "mysql"
+    }
+  }
+  

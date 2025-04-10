@@ -2,8 +2,7 @@
   "name": "fantasticgroup",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
-  "scripts": {
+    "scripts": {
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
@@ -15,7 +14,11 @@
     "test:frontend": "vitest",
     "test:backend": "cross-env NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest --testTimeout=10000",
     "pretest": "cross-env NODE_ENV=test npm run db:reset",
-    "start": "node server.js"
+    "start": "node server.js",
+    "db:migrate": "npx sequelize-cli db:migrate",
+    "db:migrate-and-start": "npm run db:migrate && npm run start",
+    "db:reset": "npx sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all",
+    "db:reset-and-start": "npm run db:reset && npm run start"
   },
   "dependencies": {
     "@faker-js/faker": "^9.4.0",

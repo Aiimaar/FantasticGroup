@@ -14,7 +14,7 @@ module.exports = {
       },
     });
 
-    await queryInterface.addConstraint('feature_location', {
+    /*await queryInterface.addConstraint('feature_location', {
       fields: ['feature_id'],
       type: 'foreign key',
       name: 'fk_feature_location_feature',
@@ -36,7 +36,7 @@ module.exports = {
       },
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE',
-    });
+    });*/
   },
 
   async down(queryInterface, Sequelize) {
