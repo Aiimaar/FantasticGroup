@@ -1,0 +1,9 @@
+node_modules
+dist
+.dockerignore
+Dockerfile
+npm-debug.log
+.vite
+.env
+*.pem
+certs/
