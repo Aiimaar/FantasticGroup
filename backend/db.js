@@ -28,7 +28,7 @@ sequelize.authenticate()
   .then(() => console.log('Connected with MySQL!'))
   .catch(err => {
     console.error('Failed to connect to MySQL:', err.message);
-    process.exit(1);e
+    process.exit(1);
   });
 
 export default sequelize;
