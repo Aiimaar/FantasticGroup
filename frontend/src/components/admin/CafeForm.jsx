@@ -4,10 +4,10 @@ const CafeForm = ({ formData, handleChange, handleImageChange, handleSubmit, edi
   return (
     <form onSubmit={handleSubmit} className="cafe-form">
       {error && <div className="error-message">{error}</div>}
-      
+
       <div className="form-row">
         <div className="form-group">
-          <label htmlFor="name">Nom*</label>
+          <label htmlFor="name">Name*</label>
           <input 
             type="text" 
             id="name" 
@@ -17,9 +17,9 @@ const CafeForm = ({ formData, handleChange, handleImageChange, handleSubmit, edi
             required 
           />
         </div>
-        
+
         <div className="form-group">
-          <label htmlFor="place">Type de lieu</label>
+          <label htmlFor="place">Place Type</label>
           <input 
             type="text" 
             id="place" 
@@ -29,7 +29,7 @@ const CafeForm = ({ formData, handleChange, handleImageChange, handleSubmit, edi
           />
         </div>
       </div>
-      
+
       <div className="form-group">
         <label htmlFor="description">Description</label>
         <textarea 
@@ -40,10 +40,10 @@ const CafeForm = ({ formData, handleChange, handleImageChange, handleSubmit, edi
           rows="3"
         ></textarea>
       </div>
-      
+
       <div className="form-row">
         <div className="form-group">
-          <label htmlFor="address">Adresse*</label>
+          <label htmlFor="address">Address*</label>
           <input 
             type="text" 
             id="address" 
@@ -53,9 +53,9 @@ const CafeForm = ({ formData, handleChange, handleImageChange, handleSubmit, edi
             required 
           />
         </div>
-        
+
         <div className="form-group">
-          <label htmlFor="city">Ville*</label>
+          <label htmlFor="city">City*</label>
           <input 
             type="text" 
             id="city" 
@@ -65,9 +65,9 @@ const CafeForm = ({ formData, handleChange, handleImageChange, handleSubmit, edi
             required 
           />
         </div>
-        
+
         <div className="form-group">
-          <label htmlFor="country">Pays*</label>
+          <label htmlFor="country">Country*</label>
           <input 
             type="text" 
             id="country" 
@@ -78,7 +78,7 @@ const CafeForm = ({ formData, handleChange, handleImageChange, handleSubmit, edi
           />
         </div>
       </div>
-      
+
       <div className="form-row">
         <div className="form-group">
           <label htmlFor="lat">Latitude*</label>
@@ -91,7 +91,7 @@ const CafeForm = ({ formData, handleChange, handleImageChange, handleSubmit, edi
             required 
           />
         </div>
-        
+
         <div className="form-group">
           <label htmlFor="lon">Longitude*</label>
           <input 
@@ -104,10 +104,10 @@ const CafeForm = ({ formData, handleChange, handleImageChange, handleSubmit, edi
           />
         </div>
       </div>
-      
+
       <div className="form-row">
         <div className="form-group">
-          <label htmlFor="openH">Heure d'ouverture*</label>
+          <label htmlFor="openH">Opening Hour*</label>
           <input 
             type="time" 
             id="openH" 
@@ -117,9 +117,9 @@ const CafeForm = ({ formData, handleChange, handleImageChange, handleSubmit, edi
             required 
           />
         </div>
-        
+
         <div className="form-group">
-          <label htmlFor="closeH">Heure de fermeture*</label>
+          <label htmlFor="closeH">Closing Hour*</label>
           <input 
             type="time" 
             id="closeH" 
@@ -130,7 +130,7 @@ const CafeForm = ({ formData, handleChange, handleImageChange, handleSubmit, edi
           />
         </div>
       </div>
-      
+
       <div className="form-group">
         <label htmlFor="image">Image</label>
         <input 
@@ -140,16 +140,16 @@ const CafeForm = ({ formData, handleChange, handleImageChange, handleSubmit, edi
           onChange={handleImageChange} 
           accept="image/*"
         />
-        {editingId && <p className="help-text">Laissez vide pour conserver l'image actuelle</p>}
+        {editingId && <p className="help-text">Leave empty to keep the current image</p>}
       </div>
-      
+
       <div className="form-actions">
         <button type="submit" className="btn primary-btn">
-          {editingId ? 'Mettre à jour' : 'Ajouter'}
+          {editingId ? 'Update' : 'Add'}
         </button>
         {editingId && (
           <button type="button" onClick={resetForm} className="btn secondary-btn">
-            Annuler
+            Cancel
           </button>
         )}
       </div>

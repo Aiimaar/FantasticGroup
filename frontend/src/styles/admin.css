@@ -445,12 +445,12 @@
 }
 
 .primary-btn {
-  background-color: #007bff;
+  background-color: #849473;
   color: white;
 }
 
 .primary-btn:hover {
-  background-color: #0069d9;
+  background-color:rgb(76, 87, 65);
 }
 
 .secondary-btn {
@@ -463,25 +463,25 @@
 }
 
 .edit-btn {
-  background-color: #17a2b8;
+  background-color: #849473;
   color: white;
   font-size: 12px;
   padding: 6px 12px;
 }
 
 .edit-btn:hover {
-  background-color: #138496;
+  background-color:rgb(59, 72, 45);
 }
 
 .delete-btn {
-  background-color: #dc3545;
+  background-color: #849473;
   color: white;
   font-size: 12px;
   padding: 6px 12px;
 }
 
 .delete-btn:hover {
-  background-color: #c82333;
+  background-color:rgb(59, 72, 45);;
 }
 
 /* Messages d'état */

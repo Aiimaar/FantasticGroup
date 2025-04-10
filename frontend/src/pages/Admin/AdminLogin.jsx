@@ -40,13 +40,13 @@ const AdminLogin = () => {
     <div className="admin-login-container">
       <div className="admin-login-form">
         <h2>Administration</h2>
-        <p>Connectez-vous pour accéder au tableau de bord</p>
+        <p>Log in to access the dashboard</p>
         
         {error && <div className="error-message">{error}</div>}
         
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label htmlFor="username">Nom d'utilisateur</label>
+            <label htmlFor="username">Username </label>
             <input
               type="text"
               id="username"
@@ -58,7 +58,7 @@ const AdminLogin = () => {
           </div>
           
           <div className="form-group">
-            <label htmlFor="password">Mot de passe</label>
+            <label htmlFor="password">password</label>
             <input
               type="password"
               id="password"
@@ -70,7 +70,7 @@ const AdminLogin = () => {
           </div>
           
           <button type="submit" disabled={loading}>
-            {loading ? 'Connexion en cours...' : 'Se connecter'}
+            {loading ? 'Connexion loading...' : 'Log in'}
           </button>
         </form>
       </div>

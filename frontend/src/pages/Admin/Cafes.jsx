@@ -24,7 +24,7 @@ const Cafes = () => {
   const [editingId, setEditingId] = useState(null);
   const { adminAuth } = useAuth();
 
-  // Charger la liste des cafés au montage
+  // Load cafes on mount
   useEffect(() => {
     fetchCafes();
   }, []);
@@ -36,8 +36,8 @@ const Cafes = () => {
       setCafes(response.data);
       setError('');
     } catch (error) {
-      console.error('Erreur lors du chargement des cafés:', error);
-      setError('Impossible de charger les cafés. Veuillez réessayer plus tard.');
+      console.error('Error while loading cafes:', error);
+      setError('Unable to load cafes. Please try again later.');
     } finally {
       setLoading(false);
     }
@@ -56,16 +56,15 @@ const Cafes = () => {
     e.preventDefault();
     setError('');
     
-    // Validation des champs obligatoires
+    // Required fields validation
     const requiredFields = ['name', 'address', 'city', 'country', 'lat', 'lon', 'openH', 'closeH'];
     const missingFields = requiredFields.filter(field => !formData[field]);
     
     if (missingFields.length > 0) {
-      setError(`Les champs suivants sont requis : ${missingFields.join(', ')}`);
+      setError(`The following fields are required: ${missingFields.join(', ')}`);
       return;
     }
 
-    // Création du FormData pour l'envoi
     const formDataToSend = new FormData();
     Object.keys(formData).forEach(key => {
       if (formData[key] !== null && formData[key] !== undefined) {
@@ -75,7 +74,7 @@ const Cafes = () => {
 
     try {
       if (editingId) {
-        // Mise à jour d'un café existant
+        // Update existing cafe
         await axios.put(`http://localhost:3000/api/locations/${editingId}`, formDataToSend, {
           headers: {
             'Authorization': `Bearer ${adminAuth.token}`,
@@ -83,9 +82,9 @@ const Cafes = () => {
           }
         });
         setError('');
-        alert('Café mis à jour avec succès !');
+        alert('Cafe updated successfully!');
       } else {
-        // Création d'un nouveau café
+        // Create new cafe
         await axios.post('http://localhost:3000/api/locations', formDataToSend, {
           headers: {
             'Authorization': `Bearer ${adminAuth.token}`,
@@ -93,14 +92,13 @@ const Cafes = () => {
           }
         });
         setError('');
-        alert('Café ajouté avec succès !');
+        alert('Cafe added successfully!');
       }
-      // Rafraîchir la liste et réinitialiser le formulaire
       fetchCafes();
       resetForm();
     } catch (error) {
-      console.error('Erreur lors de la soumission:', error);
-      setError(error.response?.data?.error || 'Une erreur est survenue. Veuillez réessayer.');
+      console.error('Error while submitting:', error);
+      setError(error.response?.data?.error || 'An error occurred. Please try again.');
     }
   };
 
@@ -119,23 +117,23 @@ const Cafes = () => {
       lon: cafeToEdit.lon || '',
       openH: cafeToEdit.openH || '08:00',
       closeH: cafeToEdit.closeH || '20:00',
-      image: null // On ne peut pas récupérer l'image existante, juste permettre d'en télécharger une nouvelle
+      image: null
     });
     setEditingId(id);
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm('Êtes-vous sûr de vouloir supprimer ce café ?')) return;
+    if (!window.confirm('Are you sure you want to delete this cafe?')) return;
     
     try {
       await axios.delete(`http://localhost:3000/api/locations/${id}`, {
         headers: { 'Authorization': `Bearer ${adminAuth.token}` }
       });
       fetchCafes();
-      alert('Café supprimé avec succès !');
+      alert('Cafe deleted successfully!');
     } catch (error) {
-      console.error('Erreur lors de la suppression:', error);
-      setError('Impossible de supprimer ce café. Veuillez réessayer.');
+      console.error('Error while deleting:', error);
+      setError('Unable to delete this cafe. Please try again.');
     }
   };
 
@@ -157,12 +155,12 @@ const Cafes = () => {
   };
 
   if (loading && cafes.length === 0) {
-    return <div className="loading">Chargement des cafés...</div>;
+    return <div className="loading">Loading cafes...</div>;
   }
 
   return (
     <div className="cafes-manager">
-      <h1>{editingId ? 'Modifier un café' : 'Ajouter un nouveau café'}</h1>
+      <h1>{editingId ? 'Edit cafe' : 'Add new cafe'}</h1>
       
       <CafeForm 
         formData={formData}
@@ -174,21 +172,21 @@ const Cafes = () => {
         error={error}
       />
 
-      <h2>Liste des cafés</h2>
+      <h2>List of cafes</h2>
       
       {cafes.length === 0 ? (
-        <p>Aucun café trouvé</p>
+        <p>No cafes found</p>
       ) : (
         <div className="table-responsive">
           <table className="cafes-table">
             <thead>
               <tr>
                 <th>ID</th>
-                <th>Nom</th>
-                <th>Lieu</th>
-                <th>Adresse</th>
-                <th>Ville</th>
-                <th>Heures</th>
+                <th>Name</th>
+                <th>Place</th>
+                <th>Address</th>
+                <th>City</th>
+                <th>Hours</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -203,10 +201,10 @@ const Cafes = () => {
                   <td>{cafe.openH} - {cafe.closeH}</td>
                   <td className="actions">
                     <button onClick={() => handleEdit(cafe.id)} className="btn edit-btn">
-                      Modifier
+                      Edit
                     </button>
                     <button onClick={() => handleDelete(cafe.id)} className="btn delete-btn">
-                      Supprimer
+                      Delete
                     </button>
                   </td>
                 </tr>
