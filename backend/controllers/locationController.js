@@ -32,45 +32,57 @@ export const getLocations = async (req, res) => {
 
 export const createLocation = async (req, res) => {
     const { name, description, place, address, city, country, lat, lon, openH, closeH } = req.body;
-    const image = req.file ? req.file.filename : null;
-
+    const images = req.files ? req.files.map(file => file.filename) : []; // Récupère les noms des fichiers
+  
     if (!name || !place || !address || !city || !country || !lat || !lon || !openH || !closeH) {
-        return res.status(400).json({ error: "All fields are required." });
+      return res.status(400).json({ error: "All fields are required." });
     }
-
+  
     try {
-        const location = await Location.create({
-            name, description, place, address, city, country, lat, lon, openH, closeH, image
-        });
-        res.status(201).json(location);
+      const location = await Location.create({
+        name,
+        description,
+        place,
+        address,
+        city,
+        country,
+        lat,
+        lon,
+        openH,
+        closeH,
+        images // Stocke le tableau d'images
+      });
+      res.status(201).json(location);
     } catch (error) {
-        console.error("Error creating location:", error.message);
-        res.status(500).json({ error: "Error creating location." });
+      console.error("Error creating location:", error.message);
+      res.status(500).json({ error: "Error creating location." });
     }
-};
-
-export const updateLocation = async (req, res) => {
+  };
+  
+  export const updateLocation = async (req, res) => {
     try {
-        const { id } = req.params;
-        const { name, description, place, address, city, country, lat, lon, openH, closeH } = req.body;
-        const image = req.file ? req.file.filename : null;
-        
-        const existingLocation = await Location.findByPk(id);
-        if (!existingLocation) {
-            return res.status(404).json({ message: "Location not found." });
-        }
-
-        const updatedFields = { name, description, place, address, city, country, lat, lon, openH, closeH };
-        if (image) updatedFields.image = image;
-        
-        const updatedLocation = await existingLocation.update(updatedFields);
-        res.status(200).json(updatedLocation);
+      const { id } = req.params;
+      const { name, description, place, address, city, country, lat, lon, openH, closeH } = req.body;
+      const newImages = req.files ? req.files.map(file => file.filename) : null;
+  
+      const existingLocation = await Location.findByPk(id);
+      if (!existingLocation) {
+        return res.status(404).json({ message: "Location not found." });
+      }
+  
+      const updatedFields = { name, description, place, address, city, country, lat, lon, openH, closeH };
+      if (newImages) {
+        // Si de nouvelles images sont uploadées, remplacez ou ajoutez-les
+        updatedFields.images = newImages.length > 0 ? newImages : existingLocation.images;
+      }
+  
+      const updatedLocation = await existingLocation.update(updatedFields);
+      res.status(200).json(updatedLocation);
     } catch (error) {
-        console.error("Error updating location:", error.message);
-        res.status(500).json({ message: "Error updating location." });
+      console.error("Error updating location:", error.message);
+      res.status(500).json({ message: "Error updating location." });
     }
-};
-
+  };
 export const deleteLocation = async (req, res) => {
     const { id } = req.params;
     try {
