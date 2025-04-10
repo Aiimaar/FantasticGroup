@@ -8,6 +8,7 @@ const Feature = sequelize.define('Feature', {
   },
 }, {
   timestamps: false,
+  tableName: 'feature',
 });
 
 export default Feature;

@@ -1,6 +1,6 @@
 import React from "react";
 import PlaceCard from "../../components/PlaceCard/placecard";
-import { PlaceCardHolder } from "./Location.styled";
+import { PlaceCardHolder } from "./location.styled";
 
 
 //dummy data for tesing

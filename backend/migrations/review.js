@@ -41,7 +41,7 @@ module.exports = {
       },
     });
 
-    await queryInterface.addConstraint('review', {
+    /*await queryInterface.addConstraint('review', {
       fields: ['location_id'],
       type: 'foreign key',
       name: 'fk_reviews_location',
@@ -63,7 +63,7 @@ module.exports = {
       },
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE',
-    });
+    });*/
   },
 
   async down(queryInterface, Sequelize) {
