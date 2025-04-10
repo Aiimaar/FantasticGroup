@@ -3,7 +3,7 @@
 import styled from "styled-components";
 
 export const NavigationWrapper = styled.header`
-  /* height: 200px; */
+  background-color: #E1D3C6;
   padding: 8px 15px 8px 15px;
   display: flex;
   justify-content: space-between;

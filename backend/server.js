@@ -14,7 +14,7 @@ const __dirname = path.dirname(__filename);
 // CORS Conf
 const corsOptions = {
   origin: '*',
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE','PATCH'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 };
 
