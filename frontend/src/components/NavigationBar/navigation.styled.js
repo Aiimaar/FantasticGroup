@@ -4,29 +4,23 @@ import styled from "styled-components";
 
 export const NavigationWrapper = styled.header`
   background-color: #E1D3C6;
-  padding: 8px 15px 8px 15px;
+  padding: 10px 20px;;
   display: flex;
   justify-content: space-between;
   align-items: center;
 
+  .svg-inline--fa {
+  vertical-align: -0.5rem; 
+  }
+
   .logo {
+    position: relative;
     display: flex;
-    align-items: flex-end;
-    padding: 0;
-    margin: 0;
+    height: 11vw;
+    max-height: 70px;
 
     img{
-      position: relative;
-      top:3px;
-      left: 0;
-      height: 70px;
-      width: 130px;
-      padding: 0;
-    }
-    h2{
-      /* position: absolute; */
-      /* left: 6rem; */
-      /* font-size: 5vw; */
+      
     }
   }
 
@@ -56,13 +50,17 @@ export const NavigationWrapper = styled.header`
     input {
       border: none;
       outline: none;
-      font-size: 16px;
+      font-size: 10px;
       background: transparent;
       color: #8b6d5c;
-      padding: 0 0 0 48px;
-      width: 100%;
+      padding: 0 0 0 50px;
+      width: 110%;
       opacity: 0;
       transition: opacity 0.3s ease;
+
+      &::placeholder {
+        font-size: 1px;
+      }
     }
 
     &.open input {
@@ -92,12 +90,13 @@ export const NavigationWrapper = styled.header`
   .navbox {
     background-color: #f6f1ed;
     border-radius: 40px;
-    padding: 10px 20px;
+    padding: 0 10px;
     display: flex;
+    height: 60px;
+    width: fit-content;
     align-items: center;
     gap: 30px;
     flex: 1;
-    /* max-width: 430px; */
     position: relative;
     margin: 0;
     width: 100%;
@@ -142,49 +141,49 @@ export const NavigationWrapper = styled.header`
   
     padding: 8px 15px 8px 15px;
 
-    .logo {
-
-      img {
-        width: 100%;
-      }
-    }
+    .open {
+          max-width: 45vw;
+        }
 
     .search-toggle {
       position: absolute;
       right: 4rem;
       border-radius: 30px !important;
-      height: 40px;
-        width: 40px;
+      height: 45px;
+        width: 45px;
         align-items: center;
         justify-content: center;
 
       .icon-button {
         position: relative;
         font-size: 18px;
-        left: 5px;
       }
 
+ 
+
       input {
-        position: fi;
+        /* position: relative; */
         padding: 0;
         width: 100%;
+        /* font-size: ; */
        
       }
+
     }
 
     .navbox {
       position: absolute;
       top: 0;
-      left: 50%;
-      width: 100%;
-      transform: translateX(-50%);
+      right: 0;
+      width: 100vw; 
+      height: 100vh; 
       background: #f6f1ed;
       flex-direction: column;
-      /* align-items: flex-start; */
       z-index: 20;
       display: none;
       border-radius: 0 0 20px 20px;
-    }
+      padding-top: 100px; /* Luft til top logo/nav */
+        }
 
     .navbox.open {
       display: block;

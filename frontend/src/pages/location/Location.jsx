@@ -1,58 +1,40 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PlaceCard from "../../components/PlaceCard/placecard";
 import { PlaceCardHolder } from "./Location.styled";
 
-
-//dummy data for tesing
-const LocationData = [
-  {
-    name: "Happy",
-    address: "Calle Alfredo 6",
-    timeFromUser: 6,
-    lat: "64.1466",
-    lon: "-21.9426",
-    open: true,
-    image:
-      "https://www.happy.is/wp-content/uploads/2022/05/happy-restaurant.jpg",
-  },
-  {
-    name: "Restaurante La Bodega",
-    address: "Calle Bernal 4",
-    timeFromUser: 10,
-    lat: "34.789",
-    lon: "-33.546",
-    open: true,
-    image:
-      "https://www.happy.is/wp-content/uploads/2022/05/happy-restaurant.jpg",
-  },
-  {
-    name: "Caffeteria La Plaza",
-    address: "Calle Washington 2",
-    timeFromUser: 5,
-    lat: "23.938",
-    lon: "-16.849",
-    open: false,
-    image:
-      "https://www.happy.is/wp-content/uploads/2022/05/happy-restaurant.jpg",
-  },
-];
-
 function LocationPage() {
+  const [locations, setLocations] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("http://localhost:3000/api/locations") // <-- korrekt endpoint
+      .then((res) => res.json())
+      .then((data) => {
+        setLocations(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Failed to fetch locations:", err);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) return <p>Loading cafés...</p>;
+
   return (
-<>
-      {LocationData.map((location) => (
-        <PlaceCardHolder>
-        <PlaceCard
-            key={location.name}
+    <>
+      {locations.map((location) => (
+        <PlaceCardHolder key={location.id}>
+          <PlaceCard
             name={location.name}
             address={location.address}
-            timeFromUser={location.timeFromUser}
+            timeFromUser={location.timeFromUser || 5}
             image={location.image}
-            open={location.open? "Open now" : "Closed now"}
-        />
-</PlaceCardHolder>
+            open={location.openH && location.closeH ? "Open now" : "Closed"}
+          />
+        </PlaceCardHolder>
       ))}
-      </>
+    </>
   );
 }
 
