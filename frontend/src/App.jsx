@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import { useState, useEffect } from "react";
+import "./App.css";
 import ContactForm from "./pages/contactform/ContactForm";
 // Pages
 import FrontPage from "./pages/homepage/frontpage";
