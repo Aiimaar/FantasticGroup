@@ -1,27 +1,27 @@
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import { SearchBarStyled } from "./search.styled";
 
-const SearchBar = ({ autoFocus = false }) => {
+const SearchBar = () => {
   const [searchText, setSearchText] = useState("");
-  const inputRef = useRef(null);
 
-  useEffect(() => {
-    if (autoFocus && inputRef.current) {
-      inputRef.current.focus();
-    }
-  }, [autoFocus]);
-
-  return (
-    <SearchBarStyled>
-      <input
-        ref={inputRef}
+    return (
+        <SearchBarStyled>
+             <input
         type="text"
         placeholder="Søg café, by eller adresse..."
         value={searchText}
         onChange={(e) => setSearchText(e.target.value)}
+        style={{
+          padding: "10px",
+          width: "100%",
+          marginBottom: "15px",
+          fontSize: "16px",
+          border: "1px solid #ccc",
+          borderRadius: "4px",
+        }}
       />
-    </SearchBarStyled>
-  );
+        </SearchBarStyled>
+    );
 };
 
 export default SearchBar;

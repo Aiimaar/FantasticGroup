@@ -2,44 +2,30 @@ import styled from 'styled-components';
 import wave from '../../assets/images/wave.png';
 
 export const NewsStyled = styled.section`
-  padding: 3rem;
-
 
   .news-container {
     display: flex;
     overflow-x: auto;
     gap: 20px;
-    padding: 3rem 1rem;
   }
 
   .news-container::-webkit-scrollbar {
-    display: none;
-  }
-
-  h2 {
-  position: relative;
-  display: inline-block;
-  font-size: 2rem;
-  padding-left: 1rem;
-  margin-bottom: 1.5rem;
-
-  &::after {
-    content: '';
-    position: absolute;
-    left: 65px;
-    bottom: -10px;
-    width: 80px;
-    height: 1.5px;
-    background-color:rgb(25, 25, 25); /* vælg en farve der matcher dit tema */
-    border-radius: 2px;
-  }
+  display: none; 
 }
 
   .news-item {
-    min-height: 350px;
-    min-width: 250px;
+
+    width: 250px;
+    height: 330px;
+    max-height: 330px;
+    max-width: 100px;
+    min-width: 230px;
+
+  
+    min-height: 250px;
     max-height: 350px;
     max-width: 250px;
+    min-width: 250px;
 
     position: relative;
     border-radius: 20px;
@@ -48,24 +34,30 @@ export const NewsStyled = styled.section`
     scroll-behavior: smooth;
     text-align: center;
     flex-direction: column;
+    
 
     img {
       width: 100%;
       height: 100%;
+
+
       max-height: 210px;
+
       z-index: 1;
       position: relative;
       vertical-align: middle;
     }
-
-    
 
     .wave-overlay {
       position: absolute;
       bottom: 0;
       left: 0;
       width: 100%;
+
+      height: 150px;
+
       height: 170px;
+
       background-image: url(${wave});
       background-size: cover;
       background-repeat: no-repeat;
@@ -83,7 +75,8 @@ export const NewsStyled = styled.section`
       gap: 1rem;
       flex-grow: 1;
       padding: 20px;
-
+      
+      
       h3 {
         margin: 0;
       }
@@ -96,6 +89,8 @@ export const NewsStyled = styled.section`
       background-color: #A37C67;
       color: white;
       font-weight: 100;
+    }
+    button:hover {
       cursor: pointer;
     }
 
@@ -118,17 +113,17 @@ export const NewsStyled = styled.section`
   }
 
   @media (min-width: 768px) {
+
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 
-
-   
     .news-container {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       justify-content: center;
+      
     }
   }
 `;
