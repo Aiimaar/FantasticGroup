@@ -5,6 +5,9 @@ const sequelize = new Sequelize({
   username: 'root',
   password: 'Aepppa20yseeuf',
 
+
+
+
   host: 'localhost',          
   dialect: 'mysql',           
   port: 3306,                 

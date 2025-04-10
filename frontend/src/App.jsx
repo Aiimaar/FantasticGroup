@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import { useState, useEffect } from "react";
+import "./App.css";
 import ContactForm from "./pages/contactform/ContactForm";
 // Pages
 import FrontPage from "./pages/homepage/frontpage";
@@ -10,7 +10,10 @@ import Footer from "./components/Footer/footer";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
 import UserProfile from "./pages/userprofile/UserProfile";
+
 import LocationPage from "./pages/location/Location";
+
+
 
 
 
