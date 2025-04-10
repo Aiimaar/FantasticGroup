@@ -20,6 +20,7 @@ import Dashboard from "./pages/Admin/Dashboard";
 import Cafes from "./pages/Admin/Cafes";
 import ProtectedAdminRoute from "./components/admin/ProtectedAdminRoutes";
 import LocationPage from "./pages/location/Location";
+import Details from "./pages/details/Details";
 
 
 
@@ -42,6 +43,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/user-profile" element={<UserProfile />} />
+        <Route path="/details" element={<Details />} />
         
         {/* Routes admin */}
         <Route path="/admin/login" element={<AdminLogin />} />

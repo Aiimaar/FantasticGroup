@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from "react-router-dom";
 import {
   CardWrapper,
   PictureHolder,
@@ -78,7 +79,9 @@ const PlaceCard = ({ name, address, timeFromUser, image, open }) => {
               <ReviewCount>58 reviews</ReviewCount>
             </MobileInfo>
             <ButtonsWrapper>
-              <DetailsButton>Details</DetailsButton>
+              <Link to={`/locations/${location.id}`}>
+                <DetailsButton>Details</DetailsButton>
+              </Link>
               <StartButton>Start</StartButton>
             </ButtonsWrapper>
           </FiltersAndButtons>
