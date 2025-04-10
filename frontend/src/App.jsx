@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { AuthProvider } from "./contexts/AuthContext";
+import "./App.css";
 import ContactForm from "./pages/contactform/ContactForm";
 // Pages
 import FrontPage from "./pages/homepage/frontpage";
@@ -18,6 +19,10 @@ import AdminLayout from "./components/admin/AdminLayout";
 import Dashboard from "./pages/Admin/Dashboard";
 import Cafes from "./pages/Admin/Cafes";
 import ProtectedAdminRoute from "./components/admin/ProtectedAdminRoutes";
+import LocationPage from "./pages/location/Location";
+
+
+
 
 // Styles
 import "./styles/admin.css";
@@ -33,6 +38,7 @@ function App() {
         {/* Routes publiques */}
         <Route path="/contact-form" element={<ContactForm />} />
         <Route path="/" element={<FrontPage />} />
+        <Route path="/location" element={<LocationPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/user-profile" element={<UserProfile />} />
