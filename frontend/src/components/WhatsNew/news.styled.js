@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import wave from '../../assets/images/wave.png';
 
-export const NewsStyled = styled.section`
+export const NewsStyled = styled.div`
 
   .news-container {
     display: flex;
@@ -14,11 +14,11 @@ export const NewsStyled = styled.section`
 }
 
   .news-item {
-    width: 250px;
-    height: 330px;
-    max-height: 330px;
-    max-width: 100px;
-    min-width: 230px;
+  
+    min-height: 250px;
+    max-height: 350px;
+    max-width: 250px;
+    min-width: 250px;
     position: relative;
     border-radius: 20px;
     overflow: hidden;
@@ -31,6 +31,7 @@ export const NewsStyled = styled.section`
     img {
       width: 100%;
       height: 100%;
+      max-height: 210px;
       z-index: 1;
       position: relative;
       vertical-align: middle;
@@ -41,7 +42,7 @@ export const NewsStyled = styled.section`
       bottom: 0;
       left: 0;
       width: 100%;
-      height: 150px;
+      height: 170px;
       background-image: url(${wave});
       background-size: cover;
       background-repeat: no-repeat;
