@@ -2,8 +2,12 @@ import { Sequelize } from 'sequelize';
 
 const sequelize = new Sequelize({
   database: 'fantasticgroup',  
-  username: 'root',           
-  password: 'Aepppa20yseeuf',               
+  username: 'root',
+  password: 'NouveauMotDePasse',
+
+
+
+
   host: 'localhost',          
   dialect: 'mysql',           
   port: 3306,                 
@@ -24,7 +28,7 @@ sequelize.authenticate()
   .then(() => console.log('Connected with MySQL!'))
   .catch(err => {
     console.error('Failed to connect to MySQL:', err.message);
-    process.exit(1);e
+    process.exit(1);
   });
 
 export default sequelize;
