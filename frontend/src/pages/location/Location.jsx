@@ -8,27 +8,61 @@ function LocationPage() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchLocations = async () => {
+    const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:3000/api/locations");
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        const data = await response.json();
-        console.log("API response:", data); // Log pour voir les données
-        setLocations(data);
-        setLoading(false);
-      } catch (error) {
-        console.error("Erreur lors de la récupération des localisations :", error);
-        setError(error.message);
+        setLoading(true);
+        
+        // 1. Fetch locations
+        const locationsRes = await fetch("http://localhost:3000/api/locations");
+        if (!locationsRes.ok) throw new Error("Failed to fetch locations");
+        const locationsData = await locationsRes.json();
+
+        // 2. Fetch features for each location
+        const locationsWithFeatures = await Promise.all(
+          locationsData.map(async (location) => {
+            try {
+              const featuresRes = await fetch(
+                `http://localhost:3000/api/relations/locations/${location.id}/features`
+              );
+              const featuresData = await featuresRes.json();
+              return {
+                ...location,
+                features: featuresData || []
+              };
+            } catch (err) {
+              console.error(`Error fetching features for location ${location.id}:`, err);
+              return {
+                ...location,
+                features: []
+              };
+            }
+          })
+        );
+
+        setLocations(locationsWithFeatures);
+      } catch (err) {
+        console.error("Error:", err);
+        setError(err.message);
+      } finally {
         setLoading(false);
       }
     };
-    fetchLocations();
+
+    fetchData();
   }, []);
 
-  if (loading) return <div>Chargement des localisations...</div>;
-  if (error) return <div>Erreur : {error}</div>;
+  const isOpen = (openH, closeH) => {
+    const now = new Date();
+    const [openHour, openMinute] = openH.split(':').map(Number);
+    const [closeHour, closeMinute] = closeH.split(':').map(Number);
+    const currentTime = now.getHours() * 60 + now.getMinutes();
+    const openTime = openHour * 60 + openMinute;
+    const closeTime = closeHour * 60 + closeMinute;
+    return currentTime >= openTime && currentTime <= closeTime;
+  };
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
 
   return (
     <>
@@ -41,26 +75,15 @@ function LocationPage() {
               timeFromUser={location.timeFromUser || "N/A"}
               images={location.images}
               open={isOpen(location.openH, location.closeH) ? "Open now" : "Closed now"}
+              features={location.features}
             />
           </PlaceCardHolder>
         ))
       ) : (
-        <div>Aucune localisation trouvée.</div>
+        <div>No locations found</div>
       )}
     </>
   );
-}
-
-function isOpen(openH, closeH) {
-  const now = new Date();
-  const [openHour, openMinute] = openH.split(':').map(Number);
-  const [closeHour, closeMinute] = closeH.split(':').map(Number);
-  const currentHour = now.getHours();
-  const currentMinute = now.getMinutes();
-  const openTime = openHour * 60 + openMinute;
-  const closeTime = closeHour * 60 + closeMinute;
-  const currentTime = currentHour * 60 + currentMinute;
-  return currentTime >= openTime && currentTime <= closeTime;
 }
 
 export default LocationPage;

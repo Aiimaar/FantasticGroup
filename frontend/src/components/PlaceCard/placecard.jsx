@@ -20,63 +20,51 @@ import {
   FiltersAndButtons,
   MobileInfo,
   DesktopInfo,
+  CarouselContainer,
+  PrevButton,
+  NextButton,
+  CarouselDots,
+  Dot,
+  FavoriteButton,
+  Star
 } from "./placecard.styled";
 import Pin from "../../assets/images/pinicon.svg";
 import Walking from "../../assets/images/walkingicon.svg";
-import styled from "styled-components";
 
-// Styles pour le carrousel
-const CarouselContainer = styled.div`
-  position: relative;
-  width: 100%;
-  height: 100%;
-`;
-
-const NavButton = styled.button`
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(0, 0, 0, 0.5);
-  color: white;
-  border: none;
-  padding: 10px;
-  cursor: pointer;
-  z-index: 1;
-`;
-
-const PrevButton = styled(NavButton)`
-  left: 10px;
-`;
-
-const NextButton = styled(NavButton)`
-  right: 10px;
-`;
-
-const PlaceCard = ({ name, address, timeFromUser, images, open }) => {
+const PlaceCard = ({ name, address, timeFromUser, images, open, features }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isFavorite, setIsFavorite] = useState(false);
 
-  // Vérifie si images est un tableau valide, sinon utilise une image par défaut
+  // Construire les URLs complètes pour les images
+  const baseUrl = 'http://localhost:3000/uploads/';
   const imageArray = Array.isArray(images) && images.length > 0 
-    ? images 
+    ? images.map(image => `${baseUrl}${image}`)
     : ['/default-image.jpg'];
 
-  // Normalisation du chemin de l'image
-  const normalizeImagePath = (image) => {
-    if (typeof image !== 'string') return '/default-image.jpg';
-    if (image.startsWith('http')) return image;
-    const filename = image.replace(/^\/uploads\//, ''); // Supprime /uploads/ si présent
-    return `http://localhost:3000/uploads/${filename}`;
-  };
+  const currentImage = imageArray[currentImageIndex];
 
-  const currentImage = normalizeImagePath(imageArray[currentImageIndex]);
-
-  // Navigation entre les images
   const handlePrev = () => {
-    setCurrentImageIndex((prev) => (prev === 0 ? imageArray.length - 1 : prev - 1));
+    setCurrentImageIndex(prev => (prev === 0 ? imageArray.length - 1 : prev - 1));
   };
 
   const handleNext = () => {
-    setCurrentImageIndex((prev) => (prev === imageArray.length - 1 ? 0 : prev + 1));
+    setCurrentImageIndex(prev => (prev === imageArray.length - 1 ? 0 : prev + 1));
+  };
+
+  const handleDotClick = (index) => {
+    setCurrentImageIndex(index);
+  };
+
+  const toggleFavorite = () => {
+    setIsFavorite(!isFavorite);
+  };
+
+  const renderStars = () => {
+    return [1, 2, 3, 4, 5].map((star) => (
+      <Star key={`star-${star}`} filled={star <= 4}>
+        ★
+      </Star>
+    ));
   };
 
   return (
@@ -85,41 +73,52 @@ const PlaceCard = ({ name, address, timeFromUser, images, open }) => {
         <CarouselContainer>
           <PictureHolder 
             src={currentImage} 
-            alt={`Image ${currentImageIndex + 1} of ${name}`} // Ajout de l'attribut alt
+            alt={`${name} - Photo ${currentImageIndex + 1}`}
+            onError={(e) => {
+              console.log(`Failed to load image: ${currentImage}`);
+              e.target.src = '/default-image.jpg';
+            }}
           />
+          
           {imageArray.length > 1 && (
             <>
               <PrevButton onClick={handlePrev}>&lt;</PrevButton>
               <NextButton onClick={handleNext}>&gt;</NextButton>
+              <CarouselDots>
+                {imageArray.map((_, index) => (
+                  <Dot 
+                    key={`dot-${index}`}
+                    active={index === currentImageIndex}
+                    onClick={() => handleDotClick(index)}
+                  />
+                ))}
+              </CarouselDots>
             </>
           )}
+          
+          <FavoriteButton onClick={toggleFavorite}>
+            {isFavorite ? '❤️' : '🤍'}
+          </FavoriteButton>
         </CarouselContainer>
 
         <MainInfoHolder>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "space-between",
-              fontFamily: "Noto Sans",
-            }}
-          >
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
             <JourneyInfoHolder>
               <NameOfRestaurant>{name}</NameOfRestaurant>
-
               <AdressInfoHolder>
-                <img src={Pin} alt="Location pin icon" />
+                <img src={Pin} alt="" />
                 {address}
               </AdressInfoHolder>
               <TimeInfoHolder>
-                <img src={Walking} alt="Walking time icon" />
+                <img src={Walking} alt="" />
                 {timeFromUser} min
               </TimeInfoHolder>
             </JourneyInfoHolder>
+
             <AdditionalInfo>
               <DesktopInfo>
                 <OpenNow>{open}</OpenNow>
-                <StarsContainer>{/* stars */}</StarsContainer>
+                <StarsContainer>{renderStars()}</StarsContainer>
                 <ReviewCount>58 reviews</ReviewCount>
               </DesktopInfo>
             </AdditionalInfo>
@@ -127,19 +126,26 @@ const PlaceCard = ({ name, address, timeFromUser, images, open }) => {
 
           <FiltersAndButtons>
             <FilterHolder>
-              <Filter />
-              <Filter />
-              <Filter />
-              <Filter />
+              {features && features.length > 0 ? (
+                features.map((feature) => (
+                  <Filter key={`feature-${feature.id}`}>
+                    {feature.name}
+                  </Filter>
+                ))
+              ) : (
+                <Filter>Non disponible</Filter>
+              )}
             </FilterHolder>
+
             <MobileInfo>
               <OpenNow>{open}</OpenNow>
-              <StarsContainer>{/* stars */}</StarsContainer>
+              <StarsContainer>{renderStars()}</StarsContainer>
               <ReviewCount>58 reviews</ReviewCount>
             </MobileInfo>
+
             <ButtonsWrapper>
-              <DetailsButton>Details</DetailsButton>
-              <StartButton>Start</StartButton>
+              <DetailsButton>Détails</DetailsButton>
+              <StartButton>Commencer</StartButton>
             </ButtonsWrapper>
           </FiltersAndButtons>
         </MainInfoHolder>
