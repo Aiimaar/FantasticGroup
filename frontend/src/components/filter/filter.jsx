@@ -20,9 +20,9 @@ const Filter = ({ features, selectedFeatures, onFeatureChange }) => {
 
   return (
     <FilterContainer>
-      <FilterTitle>Filtres</FilterTitle>
+      <FilterTitle>Filters</FilterTitle>
       <FilterSection>
-        <FilterSectionTitle>Facilités</FilterSectionTitle>
+        <FilterSectionTitle>Amenities</FilterSectionTitle>
         {features.length > 0 ? (
           features.map(feature => (
             <FilterItem key={`feature-${feature.id}`}>
@@ -36,10 +36,10 @@ const Filter = ({ features, selectedFeatures, onFeatureChange }) => {
             </FilterItem>
           ))
         ) : (
-          <p>Aucune facilité disponible</p>
+          <p>No amenities available</p>
         )}
       </FilterSection>
-      {/* Ajouter d'autres sections si nécessaire, ex. : Catégorie */}
+      {/* Add other sections if needed, e.g.: Category */}
     </FilterContainer>
   );
 };

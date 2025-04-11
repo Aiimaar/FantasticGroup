@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PlaceCard from "../../components/PlaceCard/placecard";
 import Filter from "../../components/filter/filter";
-import { PageContainer, FilterColumn, LocationsColumn, PlaceCardHolder, NoLocationsMessage } from "./location.styled";
+import { PageContainer, FilterColumn, FilterBox, AdditionalComponentBox, LocationsColumn, PlaceCardHolder, NoLocationsMessage } from "./location.styled";
 
 function LocationPage() {
   const [locations, setLocations] = useState([]);
@@ -95,11 +95,18 @@ function LocationPage() {
   return (
     <PageContainer>
       <FilterColumn>
-        <Filter
-          features={allFeatures}
-          selectedFeatures={selectedFeatures}
-          onFeatureChange={setSelectedFeatures}
-        />
+        <FilterBox>
+          <Filter
+            features={allFeatures}
+            selectedFeatures={selectedFeatures}
+            onFeatureChange={setSelectedFeatures}
+          />
+        </FilterBox>
+        <AdditionalComponentBox>
+          {/* Placeholder pour le nouveau composant */}
+          <h3>Nouveau composant</h3>
+          <p>Ici, tu peux ajouter ton nouveau composant (par exemple, une carte, une liste, etc.).</p>
+        </AdditionalComponentBox>
       </FilterColumn>
       <LocationsColumn>
         {locations.length > 0 ? (

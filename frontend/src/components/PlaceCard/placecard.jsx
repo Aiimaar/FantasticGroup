@@ -35,7 +35,7 @@ const PlaceCard = ({ name, address, timeFromUser, images, open, features }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isFavorite, setIsFavorite] = useState(false);
 
-  // Construire les URLs complètes pour les images
+  // Build full image URLs
   const baseUrl = 'http://localhost:3000/uploads/';
   const imageArray = Array.isArray(images) && images.length > 0 
     ? images.map(image => `${baseUrl}${image}`)
@@ -133,7 +133,7 @@ const PlaceCard = ({ name, address, timeFromUser, images, open, features }) => {
                   </Filter>
                 ))
               ) : (
-                <Filter>Non disponible</Filter>
+                <Filter>Not available</Filter>
               )}
             </FilterHolder>
 
@@ -144,8 +144,8 @@ const PlaceCard = ({ name, address, timeFromUser, images, open, features }) => {
             </MobileInfo>
 
             <ButtonsWrapper>
-              <DetailsButton>Détails</DetailsButton>
-              <StartButton>Commencer</StartButton>
+              <DetailsButton>Details</DetailsButton>
+              <StartButton>Start</StartButton>
             </ButtonsWrapper>
           </FiltersAndButtons>
         </MainInfoHolder>
@@ -154,4 +154,4 @@ const PlaceCard = ({ name, address, timeFromUser, images, open, features }) => {
   );
 };
 
-export default PlaceCard;
+export default PlaceCard
