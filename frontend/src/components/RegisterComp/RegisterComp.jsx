@@ -27,7 +27,8 @@ const RegisterComp = () => {
     }
   
     try {
-      await axios.post(`${apiUrl}/api/auth/register`, {
+      await axios.post("http://localhost:3000/api/auth/register", {
+     /*  await axios.post(`${apiUrl}/api/auth/register`, { */
         user_name,
         email,
         password,

@@ -16,7 +16,8 @@ const Cafes = () => {
     lon: '',
     openH: '08:00',
     closeH: '20:00',
-    image: null
+    images: [], // Fichiers uploadés
+    imageUrls: '' // URLs JSON
   });
   const [cafes, setCafes] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -24,7 +25,6 @@ const Cafes = () => {
   const [editingId, setEditingId] = useState(null);
   const { adminAuth } = useAuth();
 
-  // Load cafes on mount
   useEffect(() => {
     fetchCafes();
   }, []);
@@ -49,32 +49,63 @@ const Cafes = () => {
   };
 
   const handleImageChange = (e) => {
-    setFormData(prev => ({ ...prev, image: e.target.files[0] }));
+    const files = Array.from(e.target.files);
+    setFormData(prev => ({ ...prev, images: files }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-    
-    // Required fields validation
+
     const requiredFields = ['name', 'address', 'city', 'country', 'lat', 'lon', 'openH', 'closeH'];
     const missingFields = requiredFields.filter(field => !formData[field]);
-    
+
     if (missingFields.length > 0) {
       setError(`The following fields are required: ${missingFields.join(', ')}`);
       return;
     }
 
+    // Validation : au moins un fichier ou une URL doit être fourni
+    const hasImages = formData.images && formData.images.length > 0;
+    const hasImageUrls = formData.imageUrls && formData.imageUrls.trim() !== '';
+    if (!hasImages && !hasImageUrls) {
+      setError('You must provide at least one image (file upload) or one image URL.');
+      return;
+    }
+
+    // Validation supplémentaire pour imageUrls : doit être un JSON valide
+    if (hasImageUrls) {
+      try {
+        JSON.parse(formData.imageUrls); // Vérifie si c'est un JSON valide
+      } catch (err) {
+        setError('Image URLs must be a valid JSON array (e.g., ["url1", "url2"])');
+        return;
+      }
+    }
+
     const formDataToSend = new FormData();
+
+    // Ajoutez les champs texte
     Object.keys(formData).forEach(key => {
-      if (formData[key] !== null && formData[key] !== undefined) {
+      if (key !== 'images' && key !== 'imageUrls' && formData[key] !== null && formData[key] !== undefined) {
         formDataToSend.append(key, formData[key]);
       }
     });
 
+    // Ajoutez les fichiers images
+    if (hasImages) {
+      formData.images.forEach((image) => {
+        formDataToSend.append('images', image);
+      });
+    }
+
+    // Ajoutez les URLs d'images si elles existent
+    if (hasImageUrls) {
+      formDataToSend.append('imageUrls', formData.imageUrls);
+    }
+
     try {
       if (editingId) {
-        // Update existing cafe
         await axios.put(`http://localhost:3000/api/locations/${editingId}`, formDataToSend, {
           headers: {
             'Authorization': `Bearer ${adminAuth.token}`,
@@ -84,7 +115,6 @@ const Cafes = () => {
         setError('');
         alert('Cafe updated successfully!');
       } else {
-        // Create new cafe
         await axios.post('http://localhost:3000/api/locations', formDataToSend, {
           headers: {
             'Authorization': `Bearer ${adminAuth.token}`,
@@ -98,14 +128,14 @@ const Cafes = () => {
       resetForm();
     } catch (error) {
       console.error('Error while submitting:', error);
-      setError(error.response?.data?.error || 'An error occurred. Please try again.');
+      setError(error.response?.data?.message || 'An error occurred. Please try again.');
     }
   };
 
   const handleEdit = (id) => {
     const cafeToEdit = cafes.find(cafe => cafe.id === id);
     if (!cafeToEdit) return;
-    
+
     setFormData({
       name: cafeToEdit.name || '',
       description: cafeToEdit.description || '',
@@ -117,14 +147,15 @@ const Cafes = () => {
       lon: cafeToEdit.lon || '',
       openH: cafeToEdit.openH || '08:00',
       closeH: cafeToEdit.closeH || '20:00',
-      image: null
+      images: [],
+      imageUrls: cafeToEdit.images ? JSON.stringify(cafeToEdit.images) : ''
     });
     setEditingId(id);
   };
 
   const handleDelete = async (id) => {
     if (!window.confirm('Are you sure you want to delete this cafe?')) return;
-    
+
     try {
       await axios.delete(`http://localhost:3000/api/locations/${id}`, {
         headers: { 'Authorization': `Bearer ${adminAuth.token}` }
@@ -149,7 +180,8 @@ const Cafes = () => {
       lon: '',
       openH: '08:00',
       closeH: '20:00',
-      image: null
+      images: [],
+      imageUrls: ''
     });
     setEditingId(null);
   };
@@ -161,8 +193,8 @@ const Cafes = () => {
   return (
     <div className="cafes-manager">
       <h1>{editingId ? 'Edit cafe' : 'Add new cafe'}</h1>
-      
-      <CafeForm 
+
+      <CafeForm
         formData={formData}
         handleChange={handleChange}
         handleImageChange={handleImageChange}
@@ -173,7 +205,7 @@ const Cafes = () => {
       />
 
       <h2>List of cafes</h2>
-      
+
       {cafes.length === 0 ? (
         <p>No cafes found</p>
       ) : (

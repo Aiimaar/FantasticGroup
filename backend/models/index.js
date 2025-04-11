@@ -11,6 +11,11 @@ import Review from './review.js';
 Location.belongsToMany(Feature, { through: FeatureLocation, foreignKey: 'location_id' });
 Feature.belongsToMany(Location, { through: FeatureLocation, foreignKey: 'feature_id' });
 
+FeatureLocation.belongsTo(Feature, { foreignKey: 'feature_id' });
+Feature.hasMany(FeatureLocation, { foreignKey: 'feature_id' });
+FeatureLocation.belongsTo(Location, { foreignKey: 'location_id' });
+Location.hasMany(FeatureLocation, { foreignKey: 'location_id' });
+
 // User - Location relations
 User.belongsToMany(Location, { through: UserLocation, foreignKey: 'user_id' });
 Location.belongsToMany(User, { through: UserLocation, foreignKey: 'location_id' });
