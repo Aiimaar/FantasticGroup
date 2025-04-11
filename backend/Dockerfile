@@ -1,19 +1,22 @@
 FROM node
 
-# Crear directorio de trabajo
+
 WORKDIR /usr/src/app
 
-# Copiar dependencias e instalarlas
+
 COPY package*.json ./
-RUN npm install
+RUN apt-get update && apt-get install -y netcat-openbsd
+RUN npm install --production  
 
-# Copiar el resto del código
-COPY . .
 
-EXPOSE 3000
+COPY . ./
 
-# Punto de entrada de desarrollo (resetea DB, ¡solo usar si lo sabés!)
-# ENTRYPOINT [ "npm", "run", "db:reset-and-start" ]
 
-# Entrada normal (comentar la de arriba si vas a producción)
-ENTRYPOINT [ "npm", "run", "db:migrate-and-start" ]
+COPY wait-for.sh /wait-for.sh
+RUN chmod +x /wait-for.sh
+
+EXPOSE 80 
+
+
+ENTRYPOINT ["/wait-for.sh"]
+CMD ["npm", "run", "db:migrate-and-start"]  

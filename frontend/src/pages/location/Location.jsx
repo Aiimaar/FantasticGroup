@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import PlaceCard from "../../components/PlaceCard/placecard";
 import Filter from "../../components/filter/filter";
 import { PageContainer, FilterColumn, FilterBox, AdditionalComponentBox, LocationsColumn, PlaceCardHolder, NoLocationsMessage } from "./location.styled";
+/* import { PlaceCardHolder } from "./location.styled"; */
 
 function LocationPage() {
   const [locations, setLocations] = useState([]);

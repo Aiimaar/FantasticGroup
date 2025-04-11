@@ -12,6 +12,9 @@ const RegisterComp = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
+  const apiUrl = import.meta.env.VITE_API_BASE_URL;
+
+  console.log(apiUrl);
   const handleRegister = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -25,6 +28,7 @@ const RegisterComp = () => {
   
     try {
       await axios.post("http://localhost:3000/api/auth/register", {
+     /*  await axios.post(`${apiUrl}/api/auth/register`, { */
         user_name,
         email,
         password,

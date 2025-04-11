@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import {Link} from "react-router-dom";
 import {
   CardWrapper,
   PictureHolder,
@@ -144,7 +145,9 @@ const PlaceCard = ({ name, address, timeFromUser, images, open, features }) => {
             </MobileInfo>
 
             <ButtonsWrapper>
-              <DetailsButton>Details</DetailsButton>
+              <Link to={`/locations/${location.id}`}>
+                <DetailsButton>Details</DetailsButton>
+              </Link>
               <StartButton>Start</StartButton>
             </ButtonsWrapper>
           </FiltersAndButtons>
