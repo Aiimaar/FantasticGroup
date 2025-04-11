@@ -59,6 +59,7 @@ export const updateUser = async (req, res) => {
       });
     }
 
+    // Obtener el usuario existente usando el userId del token
     const existingUser = await User.findByPk(userId);
 
     if (!existingUser) {

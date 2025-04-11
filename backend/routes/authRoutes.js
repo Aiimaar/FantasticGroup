@@ -1,13 +1,26 @@
 import express from 'express';
+import jwt from 'jsonwebtoken';
 import { authenticateBasic } from '../middleware/authenticateBasic.js';
-import { login, register } from '../controllers/authController.js';
-import { adminLogin } from '../controllers/authController.js';
 
 const router = express.Router();
 
-router.post('/register', authenticateBasic, register); 
-router.post('/login', authenticateBasic, login)
-router.post('/admin/login', adminLogin);
+router.post('/login', authenticateBasic, (req, res) => {
+  const token = jwt.sign(
+    { id: req.user.id, email: req.user.email },
+    process.env.JWT_SECRET || 'your-secret-key',
+    { expiresIn: '24h' }
+  );
+
+  res.json({
+    token,
+    user: {
+      id: req.user.id,
+      user_name: req.user.user_name,
+      email: req.user.email
+    }
+  });
+});
+
 /* 
  router.post('/logout', ...),
  router.post('/refresh-token', ...)
