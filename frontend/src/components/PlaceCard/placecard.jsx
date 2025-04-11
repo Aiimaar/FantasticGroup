@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   CardWrapper,
   PictureHolder,
@@ -27,12 +27,12 @@ import {
   CarouselDots,
   Dot,
   FavoriteButton,
-  Star
+  Star,
 } from "./placecard.styled";
 import Pin from "../../assets/images/pinicon.svg";
 import Walking from "../../assets/images/walkingicon.svg";
 
-const PlaceCard = ({ name, address, timeFromUser, images, open, features }) => {
+const PlaceCard = ({ id, name, address, timeFromUser, images, open, features }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isFavorite, setIsFavorite] = useState(false);
 
@@ -40,7 +40,7 @@ const PlaceCard = ({ name, address, timeFromUser, images, open, features }) => {
   const baseUrl = 'http://localhost:3000/uploads/';
   const imageArray = Array.isArray(images) && images.length > 0 
     ? images.map(image => `${baseUrl}${image}`)
-    : ['/default-image.jpg'];
+    : ['https://via.placeholder.com/320x240.png?text=No+Image+Available'];
 
   const currentImage = imageArray[currentImageIndex];
 
@@ -77,14 +77,14 @@ const PlaceCard = ({ name, address, timeFromUser, images, open, features }) => {
             alt={`${name} - Photo ${currentImageIndex + 1}`}
             onError={(e) => {
               console.log(`Failed to load image: ${currentImage}`);
-              e.target.src = '/default-image.jpg';
+              e.target.src = 'https://via.placeholder.com/320x240.png?text=No+Image+Available';
             }}
           />
           
           {imageArray.length > 1 && (
             <>
-              <PrevButton onClick={handlePrev}>&lt;</PrevButton>
-              <NextButton onClick={handleNext}>&gt;</NextButton>
+              <PrevButton onClick={handlePrev}>{"<"}</PrevButton>
+              <NextButton onClick={handleNext}>{">"}</NextButton>
               <CarouselDots>
                 {imageArray.map((_, index) => (
                   <Dot 
@@ -107,11 +107,11 @@ const PlaceCard = ({ name, address, timeFromUser, images, open, features }) => {
             <JourneyInfoHolder>
               <NameOfRestaurant>{name}</NameOfRestaurant>
               <AdressInfoHolder>
-                <img src={Pin} alt="" />
+                <img src={Pin} alt="Pin icon" />
                 {address}
               </AdressInfoHolder>
               <TimeInfoHolder>
-                <img src={Walking} alt="" />
+                <img src={Walking} alt="Walking icon" />
                 {timeFromUser} min
               </TimeInfoHolder>
             </JourneyInfoHolder>
@@ -145,7 +145,7 @@ const PlaceCard = ({ name, address, timeFromUser, images, open, features }) => {
             </MobileInfo>
 
             <ButtonsWrapper>
-              <Link to={`/locations/${location.id}`}>
+              <Link to={`/Details/${id}`}>
                 <DetailsButton>Details</DetailsButton>
               </Link>
               <StartButton>Start</StartButton>
@@ -157,4 +157,4 @@ const PlaceCard = ({ name, address, timeFromUser, images, open, features }) => {
   );
 };
 
-export default PlaceCard
+export default PlaceCard;

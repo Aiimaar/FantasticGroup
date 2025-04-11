@@ -113,15 +113,16 @@ function LocationPage() {
         {locations.length > 0 ? (
           locations.map((location) => (
             <PlaceCardHolder key={location.id}>
-              <PlaceCard
-                name={location.name}
-                address={location.address}
-                timeFromUser={location.timeFromUser || "N/A"}
-                images={location.images}
-                open={isOpen(location.openH, location.closeH) ? "Open now" : "Closed now"}
-                features={location.features}
-              />
-            </PlaceCardHolder>
+  <PlaceCard
+    id={location.id} // Prop id passée ici
+    name={location.name}
+    address={location.address}
+    timeFromUser={location.timeFromUser || "N/A"}
+    images={location.images}
+    open={isOpen(location.openH, location.closeH) ? "Open now" : "Closed now"}
+    features={location.features}
+  />
+</PlaceCardHolder>
           ))
         ) : (
           <NoLocationsMessage>Aucune location ne correspond aux filtres sélectionnés</NoLocationsMessage>
