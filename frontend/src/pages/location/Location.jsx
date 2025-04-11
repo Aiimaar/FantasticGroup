@@ -1,23 +1,51 @@
 import React, { useEffect, useState } from "react";
 import PlaceCard from "../../components/PlaceCard/placecard";
-import { PlaceCardHolder } from "./Location.styled";
+import Filter from "../../components/filter/filter";
+import { PageContainer, FilterColumn, LocationsColumn, PlaceCardHolder, NoLocationsMessage } from "./location.styled";
 
 function LocationPage() {
   const [locations, setLocations] = useState([]);
+  const [allFeatures, setAllFeatures] = useState([]);
+  const [selectedFeatures, setSelectedFeatures] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchFeatures = async () => {
+      try {
+        const response = await fetch("http://localhost:3000/api/features");
+        if (!response.ok) throw new Error("Failed to fetch features");
+        const featuresData = await response.json();
+        console.log("Features fetched:", featuresData);
+        setAllFeatures(featuresData);
+      } catch (err) {
+        console.error("Error fetching features:", err);
+        setError(err.message);
+      }
+    };
+
+    fetchFeatures();
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        
-        // 1. Fetch locations
-        const locationsRes = await fetch("http://localhost:3000/api/locations");
-        if (!locationsRes.ok) throw new Error("Failed to fetch locations");
-        const locationsData = await locationsRes.json();
 
-        // 2. Fetch features for each location
+        const featureIdsQuery = selectedFeatures.length > 0 
+          ? `?featureIds=${selectedFeatures.join(',')}`
+          : '';
+        const url = `http://localhost:3000/api/locations/filtered${featureIdsQuery}`;
+        console.log('Fetching locations from:', url);
+        console.log('Selected features:', selectedFeatures);
+        const locationsRes = await fetch(url);
+        if (!locationsRes.ok) {
+          const errorText = await locationsRes.text();
+          throw new Error(`Failed to fetch locations: ${locationsRes.status} ${locationsRes.statusText} - ${errorText}`);
+        }
+        const locationsData = await locationsRes.json();
+        console.log("Locations fetched:", locationsData);
+
         const locationsWithFeatures = await Promise.all(
           locationsData.map(async (location) => {
             try {
@@ -49,7 +77,7 @@ function LocationPage() {
     };
 
     fetchData();
-  }, []);
+  }, [selectedFeatures]);
 
   const isOpen = (openH, closeH) => {
     const now = new Date();
@@ -65,24 +93,33 @@ function LocationPage() {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <>
-      {locations.length > 0 ? (
-        locations.map((location) => (
-          <PlaceCardHolder key={location.id}>
-            <PlaceCard
-              name={location.name}
-              address={location.address}
-              timeFromUser={location.timeFromUser || "N/A"}
-              images={location.images}
-              open={isOpen(location.openH, location.closeH) ? "Open now" : "Closed now"}
-              features={location.features}
-            />
-          </PlaceCardHolder>
-        ))
-      ) : (
-        <div>No locations found</div>
-      )}
-    </>
+    <PageContainer>
+      <FilterColumn>
+        <Filter
+          features={allFeatures}
+          selectedFeatures={selectedFeatures}
+          onFeatureChange={setSelectedFeatures}
+        />
+      </FilterColumn>
+      <LocationsColumn>
+        {locations.length > 0 ? (
+          locations.map((location) => (
+            <PlaceCardHolder key={location.id}>
+              <PlaceCard
+                name={location.name}
+                address={location.address}
+                timeFromUser={location.timeFromUser || "N/A"}
+                images={location.images}
+                open={isOpen(location.openH, location.closeH) ? "Open now" : "Closed now"}
+                features={location.features}
+              />
+            </PlaceCardHolder>
+          ))
+        ) : (
+          <NoLocationsMessage>Aucune location ne correspond aux filtres sélectionnés</NoLocationsMessage>
+        )}
+      </LocationsColumn>
+    </PageContainer>
   );
 }
 
