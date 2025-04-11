@@ -12,6 +12,7 @@ import {
 
 function Details() {
   const { id } = useParams();
+  console.log("Location ID from URL:", id); // Log pour déboguer l'ID
   const [location, setLocation] = useState(null);
   const [features, setFeatures] = useState([]);
   const [reviews, setReviews] = useState([]);
@@ -29,18 +30,21 @@ function Details() {
           throw new Error("Failed to fetch location details");
         }
         const locationData = await locationRes.json();
+        console.log("Location data:", locationData); // Log pour déboguer
 
         // Récupérer les features associées
         const featuresRes = await fetch(
           `http://localhost:3000/api/relations/locations/${id}/features`
         );
         const featuresData = await featuresRes.json();
+        console.log("Features data:", featuresData); // Log pour déboguer
 
         // Récupérer les avis associés
         const reviewsRes = await fetch(
           `http://localhost:3000/api/reviews/loc/${id}`
         );
         const reviewsData = await reviewsRes.json();
+        console.log("Reviews data:", reviewsData); // Log pour déboguer
 
         setLocation(locationData);
         setFeatures(featuresData || []);
