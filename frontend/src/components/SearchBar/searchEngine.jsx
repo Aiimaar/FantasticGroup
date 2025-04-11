@@ -1,26 +1,15 @@
-import { useState, useEffect, useRef } from "react";
-import { SearchBarStyled } from "./search.styled";
+import React from "react";
+import { SearchInput } from "./search.styled";  // Importer den nye SearchInput komponent
 
-const SearchBar = ({ autoFocus = false }) => {
-  const [searchText, setSearchText] = useState("");
-  const inputRef = useRef(null);
-
-  useEffect(() => {
-    if (autoFocus && inputRef.current) {
-      inputRef.current.focus();
-    }
-  }, [autoFocus]);
-
+const SearchBar = ({ searchText, setSearchText, handleSearch }) => {
   return (
-    <SearchBarStyled>
-      <input
-        ref={inputRef}
-        type="text"
-        placeholder="Søg café, by eller adresse..."
-        value={searchText}
-        onChange={(e) => setSearchText(e.target.value)}
-      />
-    </SearchBarStyled>
+    <SearchInput
+      type="text"
+      placeholder="Search for places..."
+      value={searchText}
+      onChange={(e) => setSearchText(e.target.value)}
+      onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+    />
   );
 };
 

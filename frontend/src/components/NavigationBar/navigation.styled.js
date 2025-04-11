@@ -41,10 +41,13 @@ export const NavigationWrapper = styled.header`
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
     display: flex;
     align-items: center;
+    justify-content: center;
 
     &.open {
       width: 240px;
       border-radius: 30px;
+      min-width: 170px;
+      justify-content: center;
     }
 
     input {

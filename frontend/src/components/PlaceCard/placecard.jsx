@@ -1,5 +1,5 @@
 import React from "react";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   CardWrapper,
   PictureHolder,
@@ -24,18 +24,16 @@ import {
 } from "./placecard.styled";
 import Pin from "../../assets/images/pinicon.svg";
 import Walking from "../../assets/images/walkingicon.svg";
-const PlaceCard = ({ name, address, timeFromUser, image, open }) => {
+
+const PlaceCard = ({ id, name, address, timeFromUser, image, open, features }) => {
   const backendUrl = "http://localhost:3000"; // Eller din prod URL
 
   return (
     <CardWrapper>
       <InfoHolder>
-      <PictureHolder>
-        <img src={`${backendUrl}/uploads/${image}`} alt={name} />
-
-      </PictureHolder>
-
-
+        <PictureHolder>
+          <img src={`${backendUrl}/uploads/${image}`} alt={name} />
+        </PictureHolder>
 
         <MainInfoHolder>
           <div
@@ -68,10 +66,9 @@ const PlaceCard = ({ name, address, timeFromUser, image, open }) => {
 
           <FiltersAndButtons>
             <FilterHolder>
-              <Filter />
-              <Filter />
-              <Filter />
-              <Filter />
+              {features && features.map((feature, index) => (
+                <Filter key={index}>{feature.name}</Filter>
+              ))}
             </FilterHolder>
             <MobileInfo>
               <OpenNow>{open}</OpenNow>
@@ -79,9 +76,9 @@ const PlaceCard = ({ name, address, timeFromUser, image, open }) => {
               <ReviewCount>58 reviews</ReviewCount>
             </MobileInfo>
             <ButtonsWrapper>
-              <Link to={`/locations/${location.id}`}>
-                <DetailsButton>Details</DetailsButton>
-              </Link>
+              <DetailsButton>
+                <Link to={`/details/${id}`}>Details</Link> {/* Link til detaljer med id */}
+              </DetailsButton>
               <StartButton>Start</StartButton>
             </ButtonsWrapper>
           </FiltersAndButtons>

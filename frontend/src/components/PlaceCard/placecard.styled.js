@@ -180,7 +180,7 @@ export const DetailsButton = styled.button`
   cursor: pointer;
 
   &:hover {
-    background-color: #f4f1ef;
+    background-color: #8a6451;
   }
   @media screen and (max-width: 768px) {
         width: 130px;
