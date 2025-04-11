@@ -189,12 +189,16 @@ export const DetailsButton = styled.button`
   transition: all 0.2s ease;
   
   &:hover {
+
+    background-color: #8a6451;
+
     background-color: #e5e5e5;
     transform: scale(1.03);
   }
   
   &:active {
     transform: scale(0.98);
+
   }
   
   @media screen and (max-width: 768px) {

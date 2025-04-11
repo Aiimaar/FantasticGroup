@@ -1,5 +1,10 @@
+
+import React from "react";
+import { Link } from "react-router-dom";
+
 import React, { useState } from "react";
 import {Link} from "react-router-dom";
+
 import {
   CardWrapper,
   PictureHolder,
@@ -32,6 +37,18 @@ import {
 import Pin from "../../assets/images/pinicon.svg";
 import Walking from "../../assets/images/walkingicon.svg";
 
+
+const PlaceCard = ({ id, name, address, timeFromUser, image, open, features }) => {
+  const backendUrl = "http://localhost:3000"; // Eller din prod URL
+
+  return (
+    <CardWrapper>
+      <InfoHolder>
+        <PictureHolder>
+          <img src={`${backendUrl}/uploads/${image}`} alt={name} />
+        </PictureHolder>
+
+
 const PlaceCard = ({ name, address, timeFromUser, images, open, features }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isFavorite, setIsFavorite] = useState(false);
@@ -47,6 +64,7 @@ const PlaceCard = ({ name, address, timeFromUser, images, open, features }) => {
   const handlePrev = () => {
     setCurrentImageIndex(prev => (prev === 0 ? imageArray.length - 1 : prev - 1));
   };
+
 
   const handleNext = () => {
     setCurrentImageIndex(prev => (prev === imageArray.length - 1 ? 0 : prev + 1));
@@ -127,6 +145,11 @@ const PlaceCard = ({ name, address, timeFromUser, images, open, features }) => {
 
           <FiltersAndButtons>
             <FilterHolder>
+
+              {features && features.map((feature, index) => (
+                <Filter key={index}>{feature.name}</Filter>
+              ))}
+
               {features && features.length > 0 ? (
                 features.map((feature) => (
                   <Filter key={`feature-${feature.id}`}>
@@ -136,6 +159,7 @@ const PlaceCard = ({ name, address, timeFromUser, images, open, features }) => {
               ) : (
                 <Filter>Not available</Filter>
               )}
+
             </FilterHolder>
 
             <MobileInfo>
@@ -145,9 +169,9 @@ const PlaceCard = ({ name, address, timeFromUser, images, open, features }) => {
             </MobileInfo>
 
             <ButtonsWrapper>
-              <Link to={`/locations/${location.id}`}>
-                <DetailsButton>Details</DetailsButton>
-              </Link>
+              <DetailsButton>
+                <Link to={`/details/${id}`}>Details</Link> {/* Link til detaljer med id */}
+              </DetailsButton>
               <StartButton>Start</StartButton>
             </ButtonsWrapper>
           </FiltersAndButtons>
@@ -157,4 +181,8 @@ const PlaceCard = ({ name, address, timeFromUser, images, open, features }) => {
   );
 };
 
+
+export default PlaceCard;
+
 export default PlaceCard
+

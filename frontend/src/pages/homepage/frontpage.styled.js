@@ -3,6 +3,10 @@ import styled from 'styled-components';
 
 export const FrontPageStyled = styled.div`
 
+span {
+  color: #86866B;
+}
+
 .bigWave {
   position: absolute;
   object-fit: contain;

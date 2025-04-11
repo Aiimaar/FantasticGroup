@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./LoginComp.css";
+import mapImage from "../../assets/images/userpage.png";
 
 const LoginComp = () => {
   const [email, setEmail] = useState("");
@@ -52,7 +53,7 @@ const LoginComp = () => {
   return (
     <div className="login-comp-container">
       <div className="login-comp-map">
-        <img src="/map.png" alt="Map illustration" className="login-comp-map-img" />
+        <img src={mapImage} alt="Map illustration" className="login-comp-map-img" />
       </div>
 
       <form onSubmit={handleLogin} className="login-comp-form">

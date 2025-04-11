@@ -22,29 +22,20 @@ import ProtectedAdminRoute from "./components/admin/ProtectedAdminRoutes";
 import LocationPage from "./pages/location/Location";
 import Details from "./pages/details/Details";
 
-
-
-
-// Styles
-import "./styles/admin.css";
-
 function App() {
-  // Vérifier si on est sur une route d'administration
-  const isAdminRoute = window.location.pathname.startsWith('/admin');
-
   return (
     <AuthProvider>
-      {!isAdminRoute && <Navigation />}
+      <Navigation />
       <Routes>
-        {/* Routes publiques */}
         <Route path="/contact-form" element={<ContactForm />} />
         <Route path="/" element={<FrontPage />} />
-        <Route path="/location" element={<LocationPage />} />
+        <Route path="/location" element={<LocationPage />} />  {/* Søgning fra navigation */}
+        <Route path="/location" element={<LocationPage />} />  {/* Route for Location Page */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/user-profile" element={<UserProfile />} />
-        <Route path="/details" element={<Details />} />
-        
+        <Route path="/details/:id" element={<Details />} />
+
         {/* Routes admin */}
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route element={<ProtectedAdminRoute />}>
@@ -54,7 +45,7 @@ function App() {
           </Route>
         </Route>
       </Routes>
-      {!isAdminRoute && <Footer />}
+      <Footer />
     </AuthProvider>
   );
 }

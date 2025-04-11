@@ -16,9 +16,15 @@
   }
   
   .login-comp-map-img {
-    width: 100%;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    max-width: 800px;
     object-fit: contain;
     filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.1));
+    z-index: 1;
+    opacity: 0.8;
   }
   
   .login-comp-form {
@@ -27,6 +33,8 @@
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    z-index: 2;
+    margin-top: clamp(2rem, 15vw, 20rem);
   }
   
   .login-comp-label {
