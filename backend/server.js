@@ -14,15 +14,9 @@ const __dirname = path.dirname(__filename);
 // CORS Conf
 const corsOptions = {
   origin: '*',
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 };
-
-// Middleware pour logger les requêtes entrantes (débogage)
-app.use((req, res, next) => {
-  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
-  next();
-});
 
 app.get("/api/status", (req, res) => {
   res.status(200).json({ message: "API funcionando" });
@@ -31,17 +25,15 @@ app.get("/api/status", (req, res) => {
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use('/uploads', express.static(path.join(__dirname, 'Uploads')));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 dotenv.config();
 
 // API routes conf
 app.use('/api', routes);
 
+
 // Error management
-app.use((req, res) => {
-  console.log(`[${new Date().toISOString()}] 404 - Route not found: ${req.method} ${req.url}`);
-  res.status(404).send('Page not found');
-});
+app.use((req, res) => res.status(404).send('Page not found'));
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send('Server error');

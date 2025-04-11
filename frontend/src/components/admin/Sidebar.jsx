@@ -1,40 +1,32 @@
 import React from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
   faHome, 
   faCoffee, 
   faUsers, 
   faComments, 
+  faPercent, 
   faSignOutAlt
 } from '@fortawesome/free-solid-svg-icons';
-import { useAuth } from '../../contexts/AuthContext';
 
 const Sidebar = () => {
   const location = useLocation();
-  const navigate = useNavigate();
-  const { adminAuth, adminLogout } = useAuth();
   
   // Fonction pour vérifier si un lien est actif
   const isActive = (path) => location.pathname.startsWith(path);
-  
-  // Fonction de déconnexion
-  const handleLogout = () => {
-    adminLogout();
-    navigate('/admin/login');
-  };
   
   return (
     <div className="admin-sidebar">
       <div className="admin-sidebar-header">
         <h2>Fantastic Group</h2>
-        <p>Espace d'administration</p>
+        <p>Espaces de travail</p>
       </div>
       
       <nav className="admin-nav">
         <ul>
           <li>
-            <Link to="/admin" className={isActive('/admin') && location.pathname === '/admin' ? 'active' : ''}>
+            <Link to="/admin" className={isActive('/admin') && !isActive('/admin/') ? 'active' : ''}>
               <FontAwesomeIcon icon={faHome} />
               <span>Dashboard</span>
             </Link>
@@ -57,19 +49,20 @@ const Sidebar = () => {
               <span>Avis</span>
             </Link>
           </li>
+          <li>
+            <Link to="/admin/promotions" className={isActive('/admin/promotions') ? 'active' : ''}>
+              <FontAwesomeIcon icon={faPercent} />
+              <span>Promotions</span>
+            </Link>
+          </li>
         </ul>
       </nav>
       
-      <div className="sidebar-footer">
-        <button onClick={handleLogout} className="logout-btn">
-          <FontAwesomeIcon icon={faSignOutAlt} />
+      <div style={{ marginTop: 'auto', padding: '20px' }}>
+        <Link to="/logout" style={{ display: 'flex', alignItems: 'center', color: '#777' }}>
+          <FontAwesomeIcon icon={faSignOutAlt} style={{ marginRight: '10px' }} />
           <span>Déconnexion</span>
-        </button>
-        {adminAuth.user && (
-          <div className="user-info">
-            <span>{adminAuth.user.username}</span>
-          </div>
-        )}
+        </Link>
       </div>
     </div>
   );

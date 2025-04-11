@@ -5,9 +5,9 @@ const { User } = models;
 
 const getErrorDetails = (error) => {
   if (error instanceof Error) {
-    return error.message || "Unknown error";
+    return error.message || "Error desconocido";
   }
-  return JSON.stringify(error, null, 2) || "Unknown error";
+  return JSON.stringify(error, null, 2) || "Error desconocido";
 };
 
 export const authenticateBasic = async (req, res, next) => {
@@ -22,7 +22,7 @@ export const authenticateBasic = async (req, res, next) => {
   const [email, password] = decodedCredentials.split(":");
 
   if (!email || !password) {
-    return res.status(401).json({ message: "Wrong credentials" });
+    return res.status(401).json({ message: "Credenciales inválidas" });
   }
 
   try {
@@ -30,14 +30,14 @@ export const authenticateBasic = async (req, res, next) => {
     if (!user) {
       return res
         .status(401)
-        .json({ message: "Wrong user" });
+        .json({ message: "Usuario incorrecto" });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res
         .status(401)
-        .json({ message: "Wrong password" });
+        .json({ message: "Contraseña incorrecta" });
     }
 
     req.user = user;
@@ -45,7 +45,7 @@ export const authenticateBasic = async (req, res, next) => {
   } catch (error) {
     console.error("Error en authenticateBasic:", getErrorDetails(error));
     res.status(500).json({ 
-      message: "Logging in error", 
+      message: "Error al iniciar sesión", 
       error: getErrorDetails(error) 
     });
   }

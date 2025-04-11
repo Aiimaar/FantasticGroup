@@ -8,7 +8,7 @@ export const authenticateToken = (req, res, next) => {
   console.log('Token:', token);
 
   if (!token) {
-    return res.status(401).json({ message: 'No token or wrong' });
+    return res.status(401).json({ message: 'Token no proporcionado o inválido' });
   }
 
   try {
@@ -16,7 +16,7 @@ export const authenticateToken = (req, res, next) => {
     req.user = decoded;
     next();
   } catch (err) {
-    console.error("Error authenticating token:", err);
-    res.status(403).json({ message: 'No token or wrong' });
+    console.error("Error al autenticar token:", err);
+    res.status(403).json({ message: 'Token no proporcionado o inválido' });
   }
 };
