@@ -4,5 +4,6 @@ dist
 Dockerfile
 npm-debug.log
 .vite
+.env
 *.pem
 certs/

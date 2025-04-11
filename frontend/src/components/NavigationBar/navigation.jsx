@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -11,6 +12,26 @@ const Navigation = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false); // State for the search bar
   const [searchText, setSearchText] = useState(""); // State for the search input
   const [isLoggedIn, setIsLoggedIn] = useState(false); // State to check if the user is logged in
+
+import { useState, useRef, useEffect } from "react";
+import { NavLink } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser, faBars, faXmark, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { NavigationWrapper } from "./navigation.styled";
+import Logo from "../../assets/images/loopLogo.svg";
+
+const Navigation = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const searchInputRef = useRef(null);
+
+  useEffect(() => {
+    if (isSearchOpen && searchInputRef.current) {
+      searchInputRef.current.focus();
+    }
+  }, [isSearchOpen]);
+
 
   const navigate = useNavigate();
 
@@ -54,6 +75,7 @@ const Navigation = () => {
             <FontAwesomeIcon icon={faMagnifyingGlass} />
           </button>
 
+
           {isSearchOpen && (
             <SearchBar
               searchText={searchText}
@@ -61,6 +83,14 @@ const Navigation = () => {
               handleSearch={handleSearch}
             />
           )}
+
+          <input
+            ref={searchInputRef}
+            type="text"
+            placeholder="Address, city or country..."
+            aria-label="Search input"
+          />
+
         </div>
 
         {/* Hamburger menu toggle */}

@@ -24,18 +24,10 @@ span {
     z-index: -1;
   }
 
-  .headerText {
-    position: absolute;
-    top: 100px;
-    left: 3rem;
-
-    font-size: 2vw;
-  }
-
   section {
     display: flex;
     flex-direction: column;
-    /* padding: 3rem; */
+    padding: 3rem;
 
 
     margin: 0;
